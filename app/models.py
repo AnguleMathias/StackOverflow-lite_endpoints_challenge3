@@ -1,8 +1,11 @@
+from flask_bcrypt import Bcrypt
+
+
 class User:
     def __init__(self, username, email, password):
         self.username = username
         self.email = email
-        self.password = password
+        self.password = Bcrypt().generate_password_hash(password).decode('utf-8')
 
 
 class Question:
