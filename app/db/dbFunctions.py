@@ -181,3 +181,9 @@ def get_answer_details(qstn_id, ans_id):
     cursor.execute("""SELECT * FROM answers WHERE qstn_id = '{}' and ans_id = '{}'""".format(qstn_id, ans_id))
     row = cursor.fetchone()
     return row
+
+
+def get_all_user_questions(user_name):
+    cursor.execute("SELECT * FROM questions WHERE qstn_owner = '{}'".format(user_name))
+    questions = cursor.fetchall()
+    return questions
