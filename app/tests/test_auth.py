@@ -135,8 +135,17 @@ class TestAuth(BaseTestCase):
         """ Test for login with wrong or no username """
         response = self.app.post("/api/v1/auth/login",
                                  content_type='application/json',
-                                 data=json.dumps(dict(username="", password="farooq"))
+                                 data=json.dumps(dict(username="", password="mathias"))
                                  )
         reply = json.loads(response.data)
         self.assertEqual(reply["message"], "username is missing")
+        self.assertEqual(response.status_code, 400)
+
+    def test_user_login_with_improper_username(self):
+        response = self.app.post("/api/v1/auth/login",
+                                 content_type='application/json',
+                                 data=json.dumps(dict(username="@$%$#@", password="mathias"))
+                                 )
+        reply = json.loads(response.data)
+        self.assertEqual(reply["message"], "wrong username format entered, Please try again")
         self.assertEqual(response.status_code, 400)
