@@ -78,5 +78,7 @@ class Login(MethodView):
 
 
 registration_view = RegisterUser.as_view("registration_view")
+login_view = Login.as_view("login_view")
 
 auth_blueprint.add_url_rule("/api/v1/auth/register", view_func=registration_view, methods=["POST"])
+auth_blueprint.add_url_rule("/api/v1/auth/login", view_func=login_view, methods=["POST"])
