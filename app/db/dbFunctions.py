@@ -26,3 +26,13 @@ def get_user_by_username(user_name):
     cursor.execute(query)
     user_name = cursor.fetchone()
     return user_name
+
+
+def is_email_exist(email):
+    # check for email existence.
+    query = ("""SELECT * FROM users where email = '{}'""".format(email))
+    cursor.execute(query)
+    user = cursor.fetchone()
+    if user:
+        return True
+    return False
