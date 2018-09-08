@@ -64,3 +64,16 @@ class DBConnection:
             self.cursor.execute(query)
 
     def create_test_tables(self):
+
+        queries = (
+            """
+            CREATE TABLE IF NOT EXISTS users (
+                user_id SERIAL PRIMARY KEY,
+                username VARCHAR(50) NOT NULL,
+                email VARCHAR(50) NOT NULL,
+                password VARCHAR(25) NOT NULL
+            )
+            """
+        )
+        for query in queries:
+            self.cursor.execute(query)
