@@ -47,3 +47,7 @@ class RegisterUser(MethodView):
                 return jsonify({"New User Created": new_user.__dict__}), 201
         return jsonify({"message": "a 'key(s)' is missing in your registration body"}), 400
 
+
+registration_view = RegisterUser.as_view("registration_view")
+
+auth_blueprint.add_url_rule("/api/v1/auth/register", view_func=registration_view, methods=["POST"])
