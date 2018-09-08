@@ -36,3 +36,10 @@ def is_email_exist(email):
     if user:
         return True
     return False
+
+
+def post_new_question(title, question, qstn_owner, date):
+    query = (
+        """INSERT INTO questions (title, question, qstn_owner, date) VALUES ('{}', '{}', '{}', '{}')""".
+            format(title, question, qstn_owner, date))
+    cursor.execute(query)
