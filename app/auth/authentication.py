@@ -1,5 +1,6 @@
 from flask import request, jsonify, Blueprint
 from flask.views import MethodView
+from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token
 from app.validation import FieldValidation
 from app.models import User
@@ -8,6 +9,7 @@ from app.db.dbFunctions import is_user_exist, add_new_user, get_user_by_username
 validate = FieldValidation()
 auth_blueprint = Blueprint("auth_blueprint", __name__)
 
+bcrypt = Bcrypt()
 
 class RegisterUser(MethodView):
     def post(self):
@@ -19,6 +21,7 @@ class RegisterUser(MethodView):
             user_name = reg_info.get("username").strip()
             email = reg_info.get("email").strip()
             password = reg_info.get("password")
+            hashed_password = bcrypt.generate_password_hash(password).decode('UTF-8')
 
             validation_resp = validate.register_validation(user_name, email, password)
 
@@ -43,7 +46,7 @@ class RegisterUser(MethodView):
                 return jsonify({"message": "Email already exists"}), 409
 
             else:
-                add_new_user(user_name=user_name, email=email, password=password)
+                add_new_user(user_name=user_name, email=email, password=hashed_password)
                 new_user = User(user_name, email, password)
                 return jsonify({"New User Created": new_user.__dict__}), 201
         return jsonify({"message": "a 'key(s)' is missing in your registration body"}), 400
@@ -67,7 +70,7 @@ class Login(MethodView):
                 return jsonify({"message": "wrong username format entered, Please try again"}), 400
 
             user_token = {}
-            user = get_user_by_username(user_name)
+            user = get_user_by_username(user_name, password)
 
             if user:
                 access_token = create_access_token(identity=user["username"])

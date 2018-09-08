@@ -26,7 +26,7 @@ class DBConnection:
                 user_id SERIAL PRIMARY KEY,
                 username VARCHAR(50) NOT NULL,
                 email VARCHAR(50) NOT NULL,
-                password VARCHAR(25) NOT NULL
+                password VARCHAR(250) NOT NULL
             )
             """,
 
@@ -71,7 +71,7 @@ class DBConnection:
                 user_id SERIAL PRIMARY KEY,
                 username VARCHAR(50) NOT NULL,
                 email VARCHAR(50) NOT NULL,
-                password VARCHAR(25) NOT NULL
+                password VARCHAR(250) NOT NULL
             )
             """,
             """
