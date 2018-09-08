@@ -95,3 +95,27 @@ class TestAuth(BaseTestCase):
         reply = json.loads(response.data)
         self.assertEqual(reply["message"], "Email already exists")
         self.assertEqual(response.status_code, 409)
+
+    def test_registration_with_no_keys(self):
+        """ test_registration_with-no_keys """
+        response = self.app.post("/api/v1/auth/register",
+                                 content_type='application/json',
+                                 data=json.dumps(dict(email="angule@gmail.com", password="mathias"), )
+                                 )
+        reply = json.loads(response.data)
+        self.assertEquals(reply.get("message"), "a 'key(s)' is missing in your registration body")
+        self.assertEquals(response.status_code, 400)
+
+    def test_user_login_successful(self):
+        """ Test for successful login """
+        response2 = self.app.post("/api/v1/auth/register",
+                                  content_type='application/json',
+                                  data=json.dumps(
+                                      dict(username="angule", email="angule@gmail.com", password="mathias"), )
+                                  )
+        response = self.app.post("/api/v1/auth/login",
+                                 content_type='application/json',
+                                 data=json.dumps(dict(username="angule", password="mathias"))
+                                 )
+        reply = json.loads(response.data)
+        self.assertEquals(response.status_code, 200)
