@@ -73,6 +73,16 @@ class DBConnection:
                 email VARCHAR(50) NOT NULL,
                 password VARCHAR(25) NOT NULL
             )
+            """,
+            """
+            CREATE TABLE IF NOT EXISTS questions (
+                qstn_id SERIAL PRIMARY KEY,
+                title VARCHAR(20) NOT NULL,
+                question VARCHAR(250) NOT NULL,
+                qstn_owner VARCHAR(20) NOT NULL,
+                date timestamp NOT NULL
+
+            )
             """
         )
         for query in queries:
