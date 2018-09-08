@@ -149,3 +149,12 @@ class TestAuth(BaseTestCase):
         reply = json.loads(response.data)
         self.assertEqual(reply["message"], "wrong username format entered, Please try again")
         self.assertEqual(response.status_code, 400)
+
+    def test_user_login_with_missing_keys(self):
+        response = self.app.post("/api/v1/auth/login",
+                                 content_type='application/json',
+                                 data=json.dumps(dict(password="mathias"))
+                                 )
+        reply = json.loads(response.data)
+        self.assertEqual(reply["message"], "a 'key(s)' is missing in login body")
+        self.assertEqual(response.status_code, 400)
