@@ -24,19 +24,26 @@ class RegisterUser(MethodView):
             if validation_resp:
                 return validation_resp
 
-        email_validation = validate.register_validation(email)
-        if not email_validation:
-            return jsonify({"message": "wrong email entered, Please try again"}), 400
+            email_validation = validate.register_validation(email)
+            if not email_validation:
+                return jsonify({"message": "wrong email entered, Please try again"}), 400
 
-        validate_username = validate.register_validation(user_name)
-        if not validate_username:
-            return jsonify({"message": "wrong username format entered, Please try again"}), 400
+            validate_username = validate.register_validation(user_name)
+            if not validate_username:
+                return jsonify({"message": "wrong username format entered, Please try again"}), 400
 
-        does_user_exist = is_user_exist(user_name)
-        does_email_exist = is_email_exist(email)
+            does_user_exist = is_user_exist(user_name)
+            does_email_exist = is_email_exist(email)
 
-        if does_user_exist:
-            return jsonify({"message": "Username already exists"}), 409
+            if does_user_exist:
+                return jsonify({"message": "Username already exists"}), 409
 
-        elif does_email_exist:
-            return jsonify({"message": "Email already exists"}), 409
+            elif does_email_exist:
+                return jsonify({"message": "Email already exists"}), 409
+
+            else:
+                add_new_user(user_name=user_name, email=email, password=password)
+                new_user = User(user_name, email, password)
+                return jsonify({"New User Created": new_user.__dict__}), 201
+        return jsonify({"message": "a 'key(s)' is missing in your registration body"}), 400
+
