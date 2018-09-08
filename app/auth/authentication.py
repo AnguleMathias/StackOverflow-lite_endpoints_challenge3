@@ -1,5 +1,6 @@
 from flask import request, jsonify, Blueprint
 from flask.views import MethodView
+from flask_jwt_extended import create_access_token
 from app.validation import FieldValidation
 from app.models import User
 from app.db.dbFunctions import is_user_exist, add_new_user, get_user_by_username, is_email_exist
@@ -64,6 +65,14 @@ class Login(MethodView):
         validate_username = validate.validate_characters(user_name)
         if not validate_username:
             return jsonify({"message": "wrong username format entered, Please try again"}), 400
+
+        user_token = {}
+        user = get_user_by_username(user_name)
+
+        if user:
+            access_token = create_access_token(identity=user["username"])
+            user_token["token"] = access_token
+            return jsonify(user_token), 200
 
 
 registration_view = RegisterUser.as_view("registration_view")
