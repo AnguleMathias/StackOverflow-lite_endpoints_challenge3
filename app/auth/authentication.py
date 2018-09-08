@@ -31,3 +31,12 @@ class RegisterUser(MethodView):
         validate_username = validate.register_validation(user_name)
         if not validate_username:
             return jsonify({"message": "wrong username format entered, Please try again"}), 400
+
+        does_user_exist = is_user_exist(user_name)
+        does_email_exist = is_email_exist(email)
+
+        if does_user_exist:
+            return jsonify({"message": "Username already exists"}), 409
+
+        elif does_email_exist:
+            return jsonify({"message": "Email already exists"}), 409
