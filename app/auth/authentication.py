@@ -27,3 +27,7 @@ class RegisterUser(MethodView):
         email_validation = validate.register_validation(email)
         if not email_validation:
             return jsonify({"message": "wrong email entered, Please try again"}), 400
+
+        validate_username = validate.register_validation(user_name)
+        if not validate_username:
+            return jsonify({"message": "wrong username format entered, Please try again"}), 400
