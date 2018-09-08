@@ -109,3 +109,31 @@ def truncate_answers(qstn_id):
         return jsonify({"message": str(exception)}), 400
 
 
+def is_answer_exist(qstn_id, answer):
+    # check answer to question existence
+    query = ("""SELECT * FROM answers WHERE qstn_id = '{}' and answer = '{}'""".format(qstn_id, answer))
+    cursor.execute(query)
+    answer = cursor.fetchone()
+    if answer:
+        return True
+    return False
+
+
+def get_question_by_id(qstn_id):
+    # check question existence
+    query = ("""SELECT * FROM questions where qstn_id = '{}'""".format(qstn_id))
+    cursor.execute(query)
+    question = cursor.fetchone()
+    if question:
+        return True
+    return False
+
+
+def get_answer_by_id(ans_id, qstn_id):
+    # check answer existence
+    query = ("""SELECT * FROM answers where ans_id = '{}' and qstn_id = '{}'""".format(ans_id, qstn_id))
+    cursor.execute(query)
+    answer = cursor.fetchone()
+    if answer:
+        return True
+    return False
