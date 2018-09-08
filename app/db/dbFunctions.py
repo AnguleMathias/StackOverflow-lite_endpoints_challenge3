@@ -60,9 +60,18 @@ def get_single_question(qstn_id):
     row = cursor.fetchone()
     return row
 
+
 def get_all_questions():
     # Query to fetch all posted questions
     cursor.execute("SELECT * from questions")
     all_questions = cursor.fetchall()
     return all_questions
+
+
+def get_all_answers_to_question(qstn_id):
+    # Query to fetch all answers to a question
+    query = ("""SELECT * from answers where qstn_id = '{}'""".format(qstn_id))
+    cursor.execute(query)
+    answers = cursor.fetchall()
+    return answers
 
