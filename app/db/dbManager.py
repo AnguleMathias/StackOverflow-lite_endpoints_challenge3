@@ -107,3 +107,5 @@ class DBConnection:
         )
         for query in queries:
             self.cursor.execute(query)
+
+    def delete_test_tables(self):
