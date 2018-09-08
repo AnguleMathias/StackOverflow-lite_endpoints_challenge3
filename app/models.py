@@ -35,3 +35,10 @@ class Answer:
         self.status = status
         self.date = date
 
+
+class Comment:
+    def __init__(self, comment, comment_owner, ans_id, date):
+        self.comment = comment
+        self.comment_owner = comment_owner
+        self.ans_id = ans_id
+        self.date = date
