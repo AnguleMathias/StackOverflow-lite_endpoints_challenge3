@@ -48,6 +48,12 @@ class RegisterUser(MethodView):
         return jsonify({"message": "a 'key(s)' is missing in your registration body"}), 400
 
 
+class Login(MethodView):
+    def post(self):
+        login_info = request.get_json()
+        search_keys = ("username", "password")
+
+
 registration_view = RegisterUser.as_view("registration_view")
 
 auth_blueprint.add_url_rule("/api/v1/auth/register", view_func=registration_view, methods=["POST"])
