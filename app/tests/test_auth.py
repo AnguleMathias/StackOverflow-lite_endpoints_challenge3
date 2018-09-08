@@ -30,8 +30,8 @@ class TestAuth(BaseTestCase):
                                  data=json.dumps(dict(username="angule", email="angule@gmail.com", password=""), )
                                  )
         reply = json.loads(response.data)
-        self.assertEquals(reply["message"], "password is missing")
-        self.assertEquals(response.status_code, 400)
+        self.assertEqual(reply["message"], "password is missing")
+        self.assertEqual(response.status_code, 400)
 
     def test_registration_with_empty_email(self):
         """ Test for empty email validation """
@@ -90,8 +90,8 @@ class TestAuth(BaseTestCase):
         response = self.app.post("/api/v1/auth/register",
                                  content_type='application/json',
                                  data=json.dumps(
-                                     dict(username="angulemathias", email="angule@gmail.com", password="mathias"), )
+                                     dict(username="angulem", email="angule@gmail.com", password="mathias"), )
                                  )
         reply = json.loads(response.data)
-        self.assertEquals(reply["message"], "Email already exists")
-        self.assertEquals(response.status_code, 409)
+        self.assertEqual(reply["message"], "Email already exists")
+        self.assertEqual(response.status_code, 409)
