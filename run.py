@@ -1,5 +1,6 @@
 from flask import jsonify
 from app import app
+from app.db import dbManager
 
 
 @app.errorhandler(404)
@@ -18,4 +19,6 @@ def internal_server_error(error):
 
 
 if __name__ == "__main__":
+    dbUtils = dbManager.DBConnection()
+    dbUtils.create_tables()
     app.run(debug=True)
