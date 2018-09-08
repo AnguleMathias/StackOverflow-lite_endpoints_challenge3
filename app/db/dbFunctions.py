@@ -41,8 +41,8 @@ def is_email_exist(email):
 
 def post_new_question(title, question, qstn_owner, date):
     query = (
-        """INSERT INTO questions (title, question, qstn_owner, date) VALUES ('{}', '{}', '{}', '{}')""".
-            format(title, question, qstn_owner, date))
+        """INSERT INTO questions (title, question, qstn_owner, date) 
+        VALUES ('{}', '{}', '{}', '{}')""".format(title, question, qstn_owner, date))
     cursor.execute(query)
 
 
@@ -137,3 +137,47 @@ def get_answer_by_id(ans_id, qstn_id):
     if answer:
         return True
     return False
+
+
+def post_new_answer(answer, ans_owner, qstn_id, vote, status, date):
+    # post a new answer
+    query = (
+        """INSERT INTO answers (answer, ans_owner, qstn_id, votes, status, date) 
+        VALUES ('{}', '{}', '{}','{}', '{}', '{}')""".format(answer, ans_owner, qstn_id, vote, status, date))
+    cursor.execute(query)
+
+
+def update_answer(answer, ans_id, qstn_id):
+    try:
+        query = ("""UPDATE answers SET answer = '{}' where ans_id = '{}' and qstn_id = '{}'""".format(
+            answer, ans_id, qstn_id))
+        cursor.execute(query)
+        count = cursor.rowcount
+        if int(count) > 0:
+            return "Answer successfully updated"
+        else:
+            return "Answer not updated, or doesn't exist"
+
+    except Exception as exception:
+        return jsonify({"message": str(exception)}), 400
+
+
+def accept_answer(status, qstn_id, ans_id):
+    try:
+        query = ("""UPDATE answers SET status = '{}' where ans_id = '{}' and qstn_id = '{}'""".format(
+            status, ans_id, qstn_id))
+        cursor.execute(query)
+        count = cursor.rowcount
+        if int(count) > 0:
+            return "Answer successfully accepted"
+        else:
+            return "Failed to accept answer, or it doesn't exist"
+
+    except Exception as exception:
+        return jsonify({"message": str(exception)}), 400
+
+
+def get_answer_details(qstn_id, ans_id):
+    cursor.execute("""SELECT * FROM answers WHERE qstn_id = '{}' and ans_id = '{}'""".format(qstn_id, ans_id))
+    row = cursor.fetchone()
+    return row
