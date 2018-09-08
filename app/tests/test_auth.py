@@ -95,3 +95,66 @@ class TestAuth(BaseTestCase):
         reply = json.loads(response.data)
         self.assertEqual(reply["message"], "Email already exists")
         self.assertEqual(response.status_code, 409)
+
+    def test_registration_with_no_keys(self):
+        """ test_registration_with-no_keys """
+        response = self.app.post("/api/v1/auth/register",
+                                 content_type='application/json',
+                                 data=json.dumps(dict(email="angule@gmail.com", password="mathias"), )
+                                 )
+        reply = json.loads(response.data)
+        self.assertEqual(reply.get("message"), "a 'key(s)' is missing in your registration body")
+        self.assertEqual(response.status_code, 400)
+
+    def test_user_login_successful(self):
+        """ Test for successful login """
+        response2 = self.app.post("/api/v1/auth/register",
+                                  content_type='application/json',
+                                  data=json.dumps(
+                                      dict(username="angule", email="angule@gmail.com", password="mathias"), )
+                                  )
+        response = self.app.post("/api/v1/auth/login",
+                                 content_type='application/json',
+                                 data=json.dumps(dict(username="angule", password="mathias"))
+                                 )
+        reply = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_login_with_wrong_or_no_password(self):
+        """ Test for login with wrong or no password """
+        response = self.app.post("/api/v1/auth/login",
+                                 content_type='application/json',
+                                 data=json.dumps(dict(username="angule", password=""))
+                                 )
+        reply = json.loads(response.data)
+
+        self.assertEqual(reply["message"], "password is missing")
+        self.assertEqual(response.status_code, 400)
+
+    def test_user_login_with_wrong_or_no_username(self):
+        """ Test for login with wrong or no username """
+        response = self.app.post("/api/v1/auth/login",
+                                 content_type='application/json',
+                                 data=json.dumps(dict(username="", password="mathias"))
+                                 )
+        reply = json.loads(response.data)
+        self.assertEqual(reply["message"], "username is missing")
+        self.assertEqual(response.status_code, 400)
+
+    def test_user_login_with_improper_username(self):
+        response = self.app.post("/api/v1/auth/login",
+                                 content_type='application/json',
+                                 data=json.dumps(dict(username="@$%$#@", password="mathias"))
+                                 )
+        reply = json.loads(response.data)
+        self.assertEqual(reply["message"], "wrong username format entered, Please try again")
+        self.assertEqual(response.status_code, 400)
+
+    def test_user_login_with_missing_keys(self):
+        response = self.app.post("/api/v1/auth/login",
+                                 content_type='application/json',
+                                 data=json.dumps(dict(password="mathias"))
+                                 )
+        reply = json.loads(response.data)
+        self.assertEqual(reply["message"], "a 'key(s)' is missing in login body")
+        self.assertEqual(response.status_code, 400)
