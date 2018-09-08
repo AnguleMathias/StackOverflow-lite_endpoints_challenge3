@@ -43,3 +43,19 @@ def post_new_question(title, question, qstn_owner, date):
         """INSERT INTO questions (title, question, qstn_owner, date) VALUES ('{}', '{}', '{}', '{}')""".
             format(title, question, qstn_owner, date))
     cursor.execute(query)
+
+
+def is_question_exist(question):
+    query = ("""SELECT * FROM questions where question = '{}'""".format(question))
+    cursor.execute(query)
+    question = cursor.fetchone()
+    if question:
+        return True
+    return False
+
+
+def get_single_question(qstn_id):
+    # Query to fetch details of a question
+    cursor.execute("SELECT * FROM questions WHERE qstn_id = '{}'".format(qstn_id))
+    row = cursor.fetchone()
+    return row
