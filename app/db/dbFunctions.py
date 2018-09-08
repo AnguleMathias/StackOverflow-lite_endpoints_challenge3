@@ -59,3 +59,10 @@ def get_single_question(qstn_id):
     cursor.execute("SELECT * FROM questions WHERE qstn_id = '{}'".format(qstn_id))
     row = cursor.fetchone()
     return row
+
+def get_all_questions():
+    # Query to fetch all posted questions
+    cursor.execute("SELECT * from questions")
+    all_questions = cursor.fetchall()
+    return all_questions
+
