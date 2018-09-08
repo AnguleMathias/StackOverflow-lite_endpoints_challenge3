@@ -103,8 +103,8 @@ class TestAuth(BaseTestCase):
                                  data=json.dumps(dict(email="angule@gmail.com", password="mathias"), )
                                  )
         reply = json.loads(response.data)
-        self.assertEquals(reply.get("message"), "a 'key(s)' is missing in your registration body")
-        self.assertEquals(response.status_code, 400)
+        self.assertEqual(reply.get("message"), "a 'key(s)' is missing in your registration body")
+        self.assertEqual(response.status_code, 400)
 
     def test_user_login_successful(self):
         """ Test for successful login """
@@ -118,4 +118,15 @@ class TestAuth(BaseTestCase):
                                  data=json.dumps(dict(username="angule", password="mathias"))
                                  )
         reply = json.loads(response.data)
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_login_with_wrong_or_no_password(self):
+        """ Test for login with wrong or no password """
+        response = self.app.post("/api/v1/auth/login",
+                                 content_type='application/json',
+                                 data=json.dumps(dict(username="angule", password=""))
+                                 )
+        reply = json.loads(response.data)
+
+        self.assertEqual(reply["message"], "password is missing")
+        self.assertEqual(response.status_code, 400)
