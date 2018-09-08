@@ -53,6 +53,18 @@ class Login(MethodView):
         login_info = request.get_json()
         search_keys = ("username", "password")
 
+        if all(key in login_info.keys() for key in search_keys):
+            user_name = login_info.get("username").strip()
+            password = login_info.get("password").strip()
+
+        login_validation = validate.login_validation(user_name, password)
+        if login_validation:
+            return login_validation
+
+        validate_username = validate.validate_characters(user_name)
+        if not validate_username:
+            return jsonify({"message": "wrong username format entered, Please try again"}), 400
+
 
 registration_view = RegisterUser.as_view("registration_view")
 
