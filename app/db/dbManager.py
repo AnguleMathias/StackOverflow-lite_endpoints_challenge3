@@ -62,3 +62,5 @@ class DBConnection:
         )
         for query in queries:
             self.cursor.execute(query)
+
+    def create_test_tables(self):
