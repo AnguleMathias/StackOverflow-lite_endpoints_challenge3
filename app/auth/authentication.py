@@ -73,6 +73,7 @@ class Login(MethodView):
             access_token = create_access_token(identity=user["username"])
             user_token["token"] = access_token
             return jsonify(user_token), 200
+        return jsonify({"message": "user does not exist, register and login again"}), 404
 
 
 registration_view = RegisterUser.as_view("registration_view")
