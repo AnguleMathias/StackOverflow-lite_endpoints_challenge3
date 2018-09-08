@@ -109,3 +109,19 @@ class DBConnection:
             self.cursor.execute(query)
 
     def delete_test_tables(self):
+        delete_queries = (
+            """
+            DROP TABLE IF EXISTS users CASCADE
+            """,
+            """
+            DROP TABLE IF EXISTS questions CASCADE
+            """,
+            """
+            DROP TABLE IF EXISTS answers CASCADE
+            """,
+            """
+            DROP TABLE IF EXISTS comments CASCADE
+            """
+        )
+        for query in delete_queries:
+            self.cursor.execute(query)
