@@ -1,3 +1,4 @@
+from flask import jsonify
 from app.db.dbManager import DBConnection
 
 connect = DBConnection()
@@ -74,4 +75,37 @@ def get_all_answers_to_question(qstn_id):
     cursor.execute(query)
     answers = cursor.fetchall()
     return answers
+
+
+def delete_question(qstn_id, user_name):
+    # Query to delete a specific question
+    try:
+        query = ("""DELETE FROM questions WHERE qstn_id = '{}' and qstn_owner = '{}'""".format(qstn_id, user_name))
+        cursor.execute(query)
+        delete = cursor.rowcount
+
+        if int(delete) > 0:
+            return jsonify({"message": "Question successfully deleted"}), 200
+        else:
+            return jsonify({"message": "Question not deleted, or doesn't exist"}), 400
+
+    except Exception as exception:
+        return jsonify({"message": str(exception)}), 400
+
+
+def truncate_answers(qstn_id):
+    # function to delete question inside answers table, but not the table itself
+    try:
+        query = ("""DELETE FROM answers WHERE qstn_id = '{}'""".format(qstn_id))
+        cursor.execute(query)
+        delete = cursor.rowcount
+
+        if int(delete) > 0:
+            return True
+        else:
+            return False
+
+    except Exception as exception:
+        return jsonify({"message": str(exception)}), 400
+
 
