@@ -40,5 +40,26 @@ class TestAuth(BaseTestCase):
                                  data=json.dumps(dict(username="angule", email=" ", password="mathias"), )
                                  )
         reply = json.loads(response.data)
-        self.assertEquals(reply["message"], "email is missing")
-        self.assertEquals(response.status_code, 400)
+        self.assertEqual(reply["message"], "email is missing")
+        self.assertEqual(response.status_code, 400)
+
+    def test_registration_with_wrong_username_format(self):
+        """ Test for empty contact validation """
+        response = self.app.post("/api/v1/auth/register",
+                                 content_type='application/json',
+                                 data=json.dumps(
+                                     dict(username="@@$#%^&", email="angule@gmail.com", password="angule"), )
+                                 )
+        reply = json.loads(response.data)
+        self.assertEqual(reply["message"], "wrong username format entered, Please try again")
+        self.assertEqual(response.status_code, 400)
+
+    def test_registration_with_wrong_email_format(self):
+        """ Test for empty contact validation """
+        response = self.app.post("/api/v1/auth/register",
+                                 content_type='application/json',
+                                 data=json.dumps(dict(username="angule", email="angulemathias", password="mathias"), )
+                                 )
+        reply = json.loads(response.data)
+        self.assertEqual(reply["message"], "wrong email entered, Please try again")
+        self.assertEqual(response.status_code, 400)
