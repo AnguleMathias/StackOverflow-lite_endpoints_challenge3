@@ -130,3 +130,13 @@ class TestAuth(BaseTestCase):
 
         self.assertEqual(reply["message"], "password is missing")
         self.assertEqual(response.status_code, 400)
+
+    def test_user_login_with_wrong_or_no_username(self):
+        """ Test for login with wrong or no username """
+        response = self.app.post("/api/v1/auth/login",
+                                 content_type='application/json',
+                                 data=json.dumps(dict(username="", password="farooq"))
+                                 )
+        reply = json.loads(response.data)
+        self.assertEqual(reply["message"], "username is missing")
+        self.assertEqual(response.status_code, 400)
