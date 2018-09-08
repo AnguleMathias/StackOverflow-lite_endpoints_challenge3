@@ -49,6 +49,15 @@ class DBConnection:
                 status VARCHAR(250) NOT NULL,
                 date timestamp NOT NULL
             )
+            """,
+            """
+            CREATE TABLE IF NOT EXISTS comments (
+                comment_id SERIAL PRIMARY KEY,
+                comment VARCHAR(250) NOT NULL,
+                comment_owner VARCHAR(20) NOT NULL,
+                ans_id INTEGER NOT NULL,
+                date timestamp NOT NULL
+            )
             """
         )
         for query in queries:
