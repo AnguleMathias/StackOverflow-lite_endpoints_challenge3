@@ -14,7 +14,7 @@ class RegisterUser(MethodView):
 
         search_keys = ("username", "email", "password")
 
-        if all(key in reg_info.key() for key in search_keys):
+        if all(key in reg_info.keys() for key in search_keys):
             user_name = reg_info.get("username").strip()
             email = reg_info.get("email").strip()
             password = reg_info.get("password")
@@ -24,11 +24,11 @@ class RegisterUser(MethodView):
             if validation_resp:
                 return validation_resp
 
-            email_validation = validate.register_validation(email)
+            email_validation = validate.validate_email(email)
             if not email_validation:
                 return jsonify({"message": "wrong email entered, Please try again"}), 400
 
-            validate_username = validate.register_validation(user_name)
+            validate_username = validate.validate_characters(user_name)
             if not validate_username:
                 return jsonify({"message": "wrong username format entered, Please try again"}), 400
 
