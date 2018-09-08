@@ -184,6 +184,7 @@ def get_answer_details(qstn_id, ans_id):
 
 
 def get_all_user_questions(user_name):
+    # Query to get questions posted by a specific user
     cursor.execute("SELECT * FROM questions WHERE qstn_owner = '{}'".format(user_name))
     questions = cursor.fetchall()
     return questions
