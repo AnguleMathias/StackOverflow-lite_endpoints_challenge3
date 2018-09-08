@@ -58,22 +58,23 @@ class Login(MethodView):
             user_name = login_info.get("username").strip()
             password = login_info.get("password").strip()
 
-        login_validation = validate.login_validation(user_name, password)
-        if login_validation:
-            return login_validation
+            login_validation = validate.login_validation(user_name, password)
+            if login_validation:
+                return login_validation
 
-        validate_username = validate.validate_characters(user_name)
-        if not validate_username:
-            return jsonify({"message": "wrong username format entered, Please try again"}), 400
+            validate_username = validate.validate_characters(user_name)
+            if not validate_username:
+                return jsonify({"message": "wrong username format entered, Please try again"}), 400
 
-        user_token = {}
-        user = get_user_by_username(user_name)
+            user_token = {}
+            user = get_user_by_username(user_name)
 
-        if user:
-            access_token = create_access_token(identity=user["username"])
-            user_token["token"] = access_token
-            return jsonify(user_token), 200
-        return jsonify({"message": "user does not exist, register and login again"}), 404
+            if user:
+                access_token = create_access_token(identity=user["username"])
+                user_token["token"] = access_token
+                return jsonify(user_token), 200
+            return jsonify({"message": "user does not exist, register and login again"}), 404
+        return jsonify({"message": "a 'key(s)' is missing in login body"}), 400
 
 
 registration_view = RegisterUser.as_view("registration_view")
