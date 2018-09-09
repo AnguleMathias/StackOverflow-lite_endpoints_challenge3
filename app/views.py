@@ -172,6 +172,15 @@ class UpDateAnswer(MethodView):
                         if "answer" in data.keys():
                             answer = data.get("answer").strip()
 
+                            ans_validation2 = validate.validate_answer(answer)
+                            if ans_validation2:
+                                return ans_validation2
+
+                            ans_validation = validate.validate_characters(answer)
+                            if not ans_validation:
+                                return jsonify({"message": "wrong answer format entered, Please try again"}), 400
+
+
 
 post_question_view = PostQuestion.as_view("post_question_view")
 fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
