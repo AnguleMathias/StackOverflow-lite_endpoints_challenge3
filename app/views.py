@@ -117,6 +117,10 @@ class PostAnswerToQuestion(MethodView):
                             "Such an answer is already given for this same question, please try with another one"
                             }), 409
 
+                does_qstn_exist = get_question_by_id(qstn_id=qstn_id)
+                if not does_qstn_exist:
+                    return jsonify({"message": " No such question exists"}), 404
+
 post_question_view = PostQuestion.as_view("post_question_view")
 fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
 fetch_one_question_view = FetchSingleQuestion.as_view("fetch_one_question_view")
