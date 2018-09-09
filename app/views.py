@@ -63,6 +63,8 @@ class FetchAllQuestions(MethodView):
 
 post_question_view = PostQuestion.as_view("post_question_view")
 fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
+fetch_one_question_view = FetchSingleQuestion.as_view("fetch_one_question_view")
 
 question_blueprint.add_url_rule("/api/v1/questions", view_func=post_question_view, methods=["POST"])
 question_blueprint.add_url_rule("/api/v1/questions", view_func=fetch_questions_view, methods=["GET"])
+question_blueprint.add_url_rule("/api/questions/<qstn_id>", view_func=fetch_one_question_view, methods=["GET"])
