@@ -7,13 +7,13 @@ class BaseConfig(object):
 
 class DevelopmentConfig(BaseConfig):
     """Development configurations"""
-    DATABASE_URL = 'postgresql://postgres:postgres@localhost:5432/stackoverflow'
+    DATABASE_URL = 'postgresql://postgres:mathias@localhost:5432/stackoverflow'
     DEBUG = True
 
 
 class TestingConfig(BaseConfig):
     """Configurations for Testing, with a separate test database."""
-    DATABASE_URL = 'postgresql://postgres:postgres@localhost:5432/stackoverflow_tests'
+    DATABASE_URL = 'postgresql://postgres:mathias@localhost:5432/stackoverflow_tests'
     TESTING = True
     DEBUG = True
 
