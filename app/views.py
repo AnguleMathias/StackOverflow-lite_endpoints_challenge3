@@ -159,6 +159,11 @@ class UpDateAnswer(MethodView):
             user = get_user_by_username(user_name=loggedin_user)
             current_user = user["username"]
 
+            does_answer_exist = get_answer_by_id(ans_id=ans_id, qstn_id=qstn_id)
+            does_qstn_exist = get_question_by_id(qstn_id=qstn_id)
+            ans_owner = get_answer_details(qstn_id, ans_id)
+            question_details = get_single_question(qstn_id=qstn_id)
+
 
 post_question_view = PostQuestion.as_view("post_question_view")
 fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
