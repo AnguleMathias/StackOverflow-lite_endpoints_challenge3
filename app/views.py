@@ -169,6 +169,9 @@ class UpDateAnswer(MethodView):
                     if current_user == ans_owner["ans_owner"]:
                         data = request.get_json()
 
+                        if "answer" in data.keys():
+                            answer = data.get("answer").strip()
+
 
 post_question_view = PostQuestion.as_view("post_question_view")
 fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
