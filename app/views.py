@@ -128,7 +128,14 @@ class PostAnswerToQuestion(MethodView):
                     vote=vote,
                     status=status,
                     date=date)
-
+                new_answer = Answer(
+                    answer=answer,
+                    ans_owner=ans_owner,
+                    qstn_id=qstn_id,
+                    vote=vote,
+                    status=status,
+                    date=date)
+                return jsonify({'New Answer Posted': new_answer.__dict__}), 201
 
 
 post_question_view = PostQuestion.as_view("post_question_view")
