@@ -61,6 +61,11 @@ class FetchSingleQuestion(MethodView):
             if id_validation:
                 return id_validation
 
+            question_details = get_single_question(qstn_id=qstn_id)
+            all_answers = get_all_answers_to_question(qstn_id=qstn_id)
+            if question_details:
+                return jsonify({"Question Details": question_details, "Answers": all_answers}), 200
+
 
 class FetchAllQuestions(MethodView):
     """Class to fetch all questions posted"""
