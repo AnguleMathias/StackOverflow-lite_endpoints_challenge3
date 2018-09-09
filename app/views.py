@@ -44,3 +44,6 @@ class PostQuestion(MethodView):
 
                 post_new_question(title=title, question=question, qstn_owner=qstn_owner, date=date)
 
+                new_question = Question(title=title, question=question, qstn_owner=qstn_owner, date=date)
+                return jsonify({"New Question Posted": new_question.__dict__}), 201
+            return jsonify({"message": "a 'key(s)' is missing in your question body"}), 400
