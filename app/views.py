@@ -1,0 +1,13 @@
+import datetime
+from flask import jsonify, request, Blueprint, json
+from flask.views import MethodView
+from flask_jwt_extended import get_jwt_identity, jwt_required
+from app.validation import FieldValidation
+from app.models import Question, Answer, Comment
+from app.db.dbFunctions import post_new_question, is_question_exist, get_user_by_username, get_all_questions, \
+    get_single_question, get_all_answers_to_question, delete_question, get_question_by_id, is_answer_exist, \
+    post_new_answer, update_answer, get_answer_details, accept_answer, get_answer_by_id, get_all_user_questions, \
+    truncate_answers
+
+validate = FieldValidation()
+question_blueprint = Blueprint("question_blueprint", __name__)
