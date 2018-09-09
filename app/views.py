@@ -26,3 +26,6 @@ class PostQuestion(MethodView):
             if all(key in data.keys() for key in search_keys):
                 now = datetime.datetime.now()
                 date = now.strftime("%Y-%m-%d %H:%M")
+
+                loggedin_user = get_jwt_identity()
+                user = get_user_by_username(user_name=loggedin_user)
