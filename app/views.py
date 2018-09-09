@@ -188,6 +188,12 @@ class UpDateAnswer(MethodView):
                     if current_user == question_details["qstn_owner"]:
                         status = "Accepted"
 
+                        accept = accept_answer(status=status, qstn_id=qstn_id, ans_id=ans_id)
+                        updated_answer = get_answer_details(qstn_id=qstn_id, ans_id=ans_id)
+                        return jsonify({"message": accept, "Updated answer": updated_answer}), 200
+                    return jsonify({"message": "No such answer exists"}), 404
+                return jsonify({"message": "No such question exists any more"}), 404
+
 
 post_question_view = PostQuestion.as_view("post_question_view")
 fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
