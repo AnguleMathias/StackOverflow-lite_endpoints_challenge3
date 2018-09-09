@@ -180,6 +180,11 @@ class UpDateAnswer(MethodView):
                             if not ans_validation:
                                 return jsonify({"message": "wrong answer format entered, Please try again"}), 400
 
+                            update = update_answer(answer=answer, ans_id=ans_id, qstn_id=qstn_id)
+                            updated_answer = get_answer_details(qstn_id=qstn_id, ans_id=ans_id)
+                            return jsonify({"message": update, "Updated answer": updated_answer}), 200
+
+                        return jsonify({"message": "Answer 'key' is missing"}), 400
 
 
 post_question_view = PostQuestion.as_view("post_question_view")
