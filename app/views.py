@@ -82,9 +82,18 @@ class FetchSingleQuestion(MethodView):
 
 class PostAnswerToQuestion(MethodView):
     """class to post an answer to a question"""
-
     @jwt_required
     def post(self, qstn_id):
+        try:
+            data = request.get_json()
+
+            if "answer" in data.keys():
+                answer = data.get("answer").strip()
+
+                now = datetime.datetime.now()
+                date = now.strftime("%Y-%m-%d %H:%M")
+                vote = 0
+                status = "pending"
 
 
 post_question_view = PostQuestion.as_view("post_question_view")
