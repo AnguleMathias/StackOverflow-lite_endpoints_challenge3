@@ -80,10 +80,73 @@ class FetchSingleQuestion(MethodView):
             return jsonify({"message": "Check your url and try again"}), 400
 
 
+class PostAnswerToQuestion(MethodView):
+    """class to post an answer to a question"""
+    @jwt_required
+    def post(self, qstn_id):
+        try:
+            data = request.get_json()
+
+            if "answer" in data.keys():
+                answer = data.get("answer").strip()
+
+                now = datetime.datetime.now()
+                date = now.strftime("%Y-%m-%d %H:%M")
+                vote = 0
+                status = "pending"
+
+                loggedin_user = get_jwt_identity()
+                user = get_user_by_username(user_name=loggedin_user)
+                ans_owner = user["username"]
+
+                id_validation = validate.validate_entered_id(qstn_id)
+                if id_validation:
+                    return id_validation
+
+                ans_validation2 = validate.validate_answer(answer)
+                if ans_validation2:
+                    return ans_validation2
+
+                ans_validation = validate.validate_characters(answer)
+                if not ans_validation:
+                    return jsonify({"message": "wrong answer format entered, Please try again"}), 400
+
+                does_answer_exist = is_answer_exist(qstn_id=qstn_id, answer=answer)
+                if does_answer_exist:
+                    return jsonify({"message":
+                            "Such an answer is already given for this same question, please try with another one"
+                            }), 409
+
+                does_qstn_exist = get_question_by_id(qstn_id=qstn_id)
+                if not does_qstn_exist:
+                    return jsonify({"message": " No such question exists"}), 404
+
+                post_new_answer(
+                    answer=answer,
+                    ans_owner=ans_owner,
+                    qstn_id=qstn_id,
+                    vote=vote,
+                    status=status,
+                    date=date)
+                new_answer = Answer(
+                    answer=answer,
+                    ans_owner=ans_owner,
+                    qstn_id=qstn_id,
+                    vote=vote,
+                    status=status,
+                    date=date)
+                return jsonify({'New Answer Posted': new_answer.__dict__}), 201
+            return jsonify({"message": "a 'key' is missing in your answer body"}), 400
+        except Exception as exception:
+            return jsonify({"message": exception}), 400
+
+
 post_question_view = PostQuestion.as_view("post_question_view")
 fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
 fetch_one_question_view = FetchSingleQuestion.as_view("fetch_one_question_view")
+post_answer_view = PostAnswerToQuestion.as_view("post_answer_view")
 
 question_blueprint.add_url_rule("/api/v1/questions", view_func=post_question_view, methods=["POST"])
 question_blueprint.add_url_rule("/api/v1/questions", view_func=fetch_questions_view, methods=["GET"])
-question_blueprint.add_url_rule("/api/questions/<qstn_id>", view_func=fetch_one_question_view, methods=["GET"])
+question_blueprint.add_url_rule("/api/v1/questions/<qstn_id>", view_func=fetch_one_question_view, methods=["GET"])
+question_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers", view_func=post_answer_view, methods=["POST"])
