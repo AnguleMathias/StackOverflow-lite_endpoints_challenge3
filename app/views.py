@@ -193,6 +193,9 @@ class UpDateAnswer(MethodView):
                         return jsonify({"message": accept, "Updated answer": updated_answer}), 200
                     return jsonify({"message": "No such answer exists"}), 404
                 return jsonify({"message": "No such question exists any more"}), 404
+        except Exception as exception:
+            print(exception)
+            return jsonify({"message": exception}), 400
 
 
 post_question_view = PostQuestion.as_view("post_question_view")
