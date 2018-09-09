@@ -62,7 +62,7 @@ class TestViewQuestion(BaseTestCase):
                                   content_type='application/json',
                                   headers=dict(Authorization='Bearer ' + reply2[1]['token']),
                                   data=json.dumps(
-                                      dict(title="Life", question="Are there so many questions about life?"), )
+                                      dict(title="What", question="What is your question?"), )
                                   )
         response3 = self.app.get("/api/v1/questions/1", content_type='application/json',
                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']), data={"qstn_id": "1"})
@@ -85,7 +85,7 @@ class TestViewQuestion(BaseTestCase):
                                   content_type='application/json',
                                   headers=dict(Authorization='Bearer ' + reply2[1]['token']),
                                   data=json.dumps(
-                                      dict(title="Life", question="Are there so many questions about life?"), )
+                                      dict(title="What", question="What is your question?"), )
                                   )
         response3 = self.app.delete("/api/v1/questions/1", content_type='application/json',
                                     headers=dict(Authorization='Bearer ' + reply2[1]['token']))
@@ -111,13 +111,38 @@ class TestViewQuestion(BaseTestCase):
                                   content_type='application/json',
                                   headers=dict(Authorization='Bearer ' + reply2[1]['token']),
                                   data=json.dumps(
-                                      dict(title="Life", question="Are there so many questions about life?"), )
+                                      dict(title="What", question="What is your question?"), )
                                   )
-        response3 = self.app.delete("/api/questions/q", content_type='application/json',
+        response3 = self.app.delete("/api/v1/questions/r", content_type='application/json',
                                     headers=dict(Authorization='Bearer ' + reply2[1]['token']))
 
         reply = json.loads(response3.data)
         self.assertEqual(reply.get("message"), "Id should be an interger")
+        self.assertEqual(response3.status_code, 400)
+
+    def test_deleting_non_existing_questions(self):
+        response1 = self.app.post("/api/v1/auth/register",
+                                  content_type='application/json',
+                                  data=json.dumps(
+                                      dict(username="angule", email="angule@gmail.com", password="mathias"), )
+                                  )
+        response = self.app.post("/api/v1/auth/login",
+                                 content_type='application/json',
+                                 data=json.dumps(dict(username="angule", password="mathias"))
+                                 )
+        reply2 = json.loads(response.data.decode())
+
+        response2 = self.app.post("/api/v1/questions",
+                                  content_type='application/json',
+                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  data=json.dumps(
+                                      dict(title="What", question="What is your question?"), )
+                                  )
+        response3 = self.app.delete("/api/v1/questions/2", content_type='application/json',
+                                    headers=dict(Authorization='Bearer ' + reply2[1]['token']))
+
+        reply = json.loads(response3.data)
+        self.assertEqual(reply.get("message"), "Question not deleted, or doesn't exist")
         self.assertEqual(response3.status_code, 400)
 
     def test_viewing_all_user_questions_(self):
