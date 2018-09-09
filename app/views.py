@@ -51,6 +51,10 @@ class PostQuestion(MethodView):
             return jsonify({"message": "All fields are required"}), 400
 
 
+class FetchAllQuestions(MethodView):
+    """Class to fetch all questions posted"""
+
+
 post_question_view = PostQuestion.as_view("post_question_view")
 
 question_blueprint.add_url_rule("/api/v1/questions", view_func=post_question_view, methods=["POST"])
