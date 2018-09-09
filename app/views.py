@@ -121,6 +121,14 @@ class PostAnswerToQuestion(MethodView):
                 if not does_qstn_exist:
                     return jsonify({"message": " No such question exists"}), 404
 
+                post_new_answer(
+                    answer=answer,
+                    ans_owner=ans_owner,
+                    qstn_id=qstn_id,
+                    vote=vote,
+                    status=status,
+                    date=date)
+
 post_question_view = PostQuestion.as_view("post_question_view")
 fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
 fetch_one_question_view = FetchSingleQuestion.as_view("fetch_one_question_view")
