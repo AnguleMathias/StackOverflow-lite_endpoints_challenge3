@@ -185,6 +185,8 @@ class UpDateAnswer(MethodView):
                             return jsonify({"message": update, "Updated answer": updated_answer}), 200
 
                         return jsonify({"message": "Answer 'key' is missing"}), 400
+                    if current_user == question_details["qstn_owner"]:
+                        status = "Accepted"
 
 
 post_question_view = PostQuestion.as_view("post_question_view")
