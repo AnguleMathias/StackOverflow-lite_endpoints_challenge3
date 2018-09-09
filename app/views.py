@@ -99,6 +99,20 @@ class PostAnswerToQuestion(MethodView):
                 user = get_user_by_username(user_name=loggedin_user)
                 ans_owner = user["username"]
 
+                id_validation = validate.validate_entered_id(qstn_id)
+                if id_validation:
+                    return id_validation
+
+                ans_validation2 = validate.validate_answer(answer)
+                if ans_validation2:
+                    return ans_validation2
+
+                ans_validation = validate.validate_characters(answer)
+                if not ans_validation:
+                    return jsonify({
+                        "message":
+                            "wrong answer format entered, Please try again"
+                    }), 400
 
 post_question_view = PostQuestion.as_view("post_question_view")
 fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
