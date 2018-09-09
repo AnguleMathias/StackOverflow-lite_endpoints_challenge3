@@ -11,3 +11,10 @@ from app.db.dbFunctions import post_new_question, is_question_exist, get_user_by
 
 validate = FieldValidation()
 question_blueprint = Blueprint("question_blueprint", __name__)
+
+
+class PostQuestion(MethodView):
+    """class for posting new question"""
+
+    @jwt_required
+    def post(self):
