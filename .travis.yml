@@ -18,5 +18,4 @@ before_script:
 script:
   - python3 -m pytest --cov=app
 
-after_success:
-- coveralls
+after_success: coveralls
