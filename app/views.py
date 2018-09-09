@@ -46,7 +46,7 @@ class PostQuestion(MethodView):
 
                 new_question = Question(title=title, question=question, qstn_owner=qstn_owner, date=date)
                 return jsonify({"New Question Posted": new_question.__dict__}), 201
-            # return jsonify({"message": "a 'key(s)' is missing in your question body"}), 400
+            return jsonify({"message": "a 'key(s)' is missing in your question body"}), 400
         except:
             return jsonify({"message": "All fields are required"}), 400
 
