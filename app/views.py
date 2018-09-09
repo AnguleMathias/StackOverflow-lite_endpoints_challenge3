@@ -61,7 +61,8 @@ class FetchAllQuestions(MethodView):
         return jsonify({"message": "No questions posted yet"}), 404
 
 
-
 post_question_view = PostQuestion.as_view("post_question_view")
+fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
 
 question_blueprint.add_url_rule("/api/v1/questions", view_func=post_question_view, methods=["POST"])
+question_blueprint.add_url_rule("/api/v1/questions", view_func=fetch_questions_view, methods=["GET"])
