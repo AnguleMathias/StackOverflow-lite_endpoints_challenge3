@@ -29,10 +29,10 @@ class PostQuestion(MethodView):
                 loggedin_user = get_jwt_identity()
                 user = get_user_by_username(user_name=loggedin_user)
 
-                # qstn_owner = user["username"]
+                qstn_owner = user["username"]
                 title = data.get("title").strip()
                 question = data.get("question").strip()
-                # date = now.strftime("%Y-%m-%d %H:%M")
+                date = now.strftime("%Y-%m-%d %H:%M")
 
                 validation = validate.validate_question(title, question)
                 if validation:
@@ -42,13 +42,23 @@ class PostQuestion(MethodView):
                 if does_qstn_exist:
                     return jsonify({"message":"Question already exists, check it out for an answer"}), 409
 
-                post_new_question(title=title, question=question)
+                post_new_question(title=title, question=question, qstn_owner=qstn_owner, date=date)
 
-                new_question = Question(title=title, question=question)
+                new_question = Question(title=title, question=question, qstn_owner=qstn_owner, date=date)
                 return jsonify({"New Question Posted": new_question.__dict__}), 201
-                # return jsonify({"message": "a 'key(s)' is missing in your question body"}), 400
+            return jsonify({"message": "a 'key(s)' is missing in your question body"}), 400
         except:
             return jsonify({"message": "All fields are required"}), 400
+
+
+class FetchAllQuestions(MethodView):
+    """Class to fetch all questions posted"""
+    @jwt_required
+    def get(self):
+        all_questions = get_all_questions()
+        if all_questions:
+            return jsonify({"All Questions": all_questions}), 200
+        return jsonify({"message": "No questions posted yet"}), 404
 
 
 class FetchSingleQuestion(MethodView):
@@ -65,16 +75,9 @@ class FetchSingleQuestion(MethodView):
             all_answers = get_all_answers_to_question(qstn_id=qstn_id)
             if question_details:
                 return jsonify({"Question Details": question_details, "Answers": all_answers}), 200
-
-
-class FetchAllQuestions(MethodView):
-    """Class to fetch all questions posted"""
-    @jwt_required
-    def get(self):
-        all_questions = get_all_questions()
-        if all_questions:
-            return jsonify({"All Questions": all_questions}), 200
-        return jsonify({"message": "No questions posted yet"}), 404
+            return jsonify({"message": "Question does not exist"}), 404
+        except:
+            return jsonify({"message": "Check your url and try again"}), 400
 
 
 post_question_view = PostQuestion.as_view("post_question_view")
