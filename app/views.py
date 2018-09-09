@@ -53,6 +53,7 @@ class PostQuestion(MethodView):
 
 class FetchAllQuestions(MethodView):
     """Class to fetch all questions posted"""
+    @jwt_required
 
 
 post_question_view = PostQuestion.as_view("post_question_view")
