@@ -155,6 +155,10 @@ class UpDateAnswer(MethodView):
             if ans_id_validation:
                 return ans_id_validation
 
+            loggedin_user = get_jwt_identity()
+            user = get_user_by_username(user_name=loggedin_user)
+            current_user = user["username"]
+
 
 post_question_view = PostQuestion.as_view("post_question_view")
 fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
