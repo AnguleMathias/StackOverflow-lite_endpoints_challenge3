@@ -200,9 +200,11 @@ class UpDateAnswer(MethodView):
 
 class FetchAllUserQuestions(MethodView):
     """class to fetch all the questions a user ever asked"""
-
     @jwt_required
     def get(self):
+        loggedin_user = get_jwt_identity()
+        user = get_user_by_username(user_name=loggedin_user)
+        qstn_owner = user["username"]
 
 
 post_question_view = PostQuestion.as_view("post_question_view")
