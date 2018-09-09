@@ -22,3 +22,24 @@ class TestViewQuestion(BaseTestCase):
         reply = json.loads(response3.data)
         self.assertEquals(reply.get("message"), "No questions posted yet")
         self.assertEquals(response3.status_code, 404)
+
+    def test_viewing_all_user_questions_(self):
+        """ Test viewing questions """
+        response1 = self.app.post("/api/v1/auth/register",
+                                  content_type='application/json',
+                                  data=json.dumps(
+                                      dict(username="angule", email="angule@gmail.com", password="mathias"), )
+                                  )
+        response = self.app.post(
+            "/api/v1/auth/login",
+            content_type='application/json',
+            data=json.dumps(dict(username="angule", password="mathias"))
+        )
+        reply2 = json.loads(response.data.decode())
+
+        response3 = self.app.get("/api/v1/questions/user_questions", content_type='application/json',
+                                 headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                 data={"qstn_owner": "angule"})
+        reply = json.loads(response3.data.decode())
+        self.assertEquals(reply.get("message"), "user has no questions")
+        self.assertEquals(response3.status_code, 404)
