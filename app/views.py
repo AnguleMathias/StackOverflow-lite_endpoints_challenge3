@@ -51,6 +51,17 @@ class PostQuestion(MethodView):
             return jsonify({"message": "All fields are required"}), 400
 
 
+class FetchSingleQuestion(MethodView):
+    """class to get single question"""
+
+    @jwt_required
+    def get(self, qstn_id):
+        try:
+            id_validation = validate.validate_entered_id(qstn_id)
+            if id_validation:
+                return id_validation
+
+
 class FetchAllQuestions(MethodView):
     """Class to fetch all questions posted"""
     @jwt_required
