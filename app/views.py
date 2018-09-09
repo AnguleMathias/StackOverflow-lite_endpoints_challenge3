@@ -146,6 +146,14 @@ class UpDateAnswer(MethodView):
 
     @jwt_required
     def put(self, qstn_id, ans_id)
+        try:
+            qstn_id_validation = validate.validate_entered_id(qstn_id)
+            if qstn_id_validation:
+                return qstn_id_validation
+
+            ans_id_validation = validate.validate_entered_id(ans_id)
+            if ans_id_validation:
+                return ans_id_validation
 
 
 post_question_view = PostQuestion.as_view("post_question_view")
