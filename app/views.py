@@ -198,11 +198,26 @@ class UpDateAnswer(MethodView):
             return jsonify({"message": exception}), 400
 
 
+class FetchAllUserQuestions(MethodView):
+    """class to fetch all the questions a user ever asked"""
+    @jwt_required
+    def get(self):
+        loggedin_user = get_jwt_identity()
+        user = get_user_by_username(user_name=loggedin_user)
+        qstn_owner = user["username"]
+
+        user_questions = get_all_user_questions(user_name=qstn_owner)
+        if user_questions:
+            return jsonify({"All Questions": user_questions}), 200
+        return jsonify({"message": "user has no questions"}), 404
+
+
 post_question_view = PostQuestion.as_view("post_question_view")
 fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
 fetch_one_question_view = FetchSingleQuestion.as_view("fetch_one_question_view")
 post_answer_view = PostAnswerToQuestion.as_view("post_answer_view")
 update_answer_view = UpDateAnswer.as_view("update_answer_view")
+get_user_questions_view = FetchAllUserQuestions.as_view("get_user_questions_view")
 
 question_blueprint.add_url_rule("/api/v1/questions", view_func=post_question_view, methods=["POST"])
 question_blueprint.add_url_rule("/api/v1/questions", view_func=fetch_questions_view, methods=["GET"])
@@ -210,3 +225,4 @@ question_blueprint.add_url_rule("/api/v1/questions/<qstn_id>", view_func=fetch_o
 question_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers", view_func=post_answer_view, methods=["POST"])
 question_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers/<ans_id>", view_func=update_answer_view,
                                 methods=["PUT"])
+question_blueprint.add_url_rule("/api/v1/questions/user_questions", view_func=get_user_questions_view, methods=["GET"])
