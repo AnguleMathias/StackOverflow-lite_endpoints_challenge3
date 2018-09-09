@@ -109,10 +109,13 @@ class PostAnswerToQuestion(MethodView):
 
                 ans_validation = validate.validate_characters(answer)
                 if not ans_validation:
-                    return jsonify({
-                        "message":
-                            "wrong answer format entered, Please try again"
-                    }), 400
+                    return jsonify({"message": "wrong answer format entered, Please try again"}), 400
+
+                does_answer_exist = is_answer_exist(qstn_id=qstn_id, answer=answer)
+                if does_answer_exist:
+                    return jsonify({"message":
+                            "Such an answer is already given for this same question, please try with another one"
+                            }), 409
 
 post_question_view = PostQuestion.as_view("post_question_view")
 fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
