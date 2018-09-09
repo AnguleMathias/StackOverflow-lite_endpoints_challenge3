@@ -22,8 +22,8 @@ def is_user_exist(user_name):
     return False
 
 
-def get_user_by_username(user_name):
-    query = ("""SELECT * from users where username = '{}'""".format(user_name))
+def get_user_by_username(user_name, password):
+    query = ("""SELECT * from users where username = '{}' and password = '{}'""".format(user_name, password))
     cursor.execute(query)
     user_name = cursor.fetchone()
     return user_name
