@@ -69,7 +69,7 @@ class Login(MethodView):
                 return jsonify({"message": "wrong username format entered, Please try again"}), 400
 
             user_token = {}
-            user = get_user_by_username(user_name)
+            user = get_user_by_username(user_name, password)
 
             if user:
                 access_token = create_access_token(identity=user)
