@@ -145,7 +145,7 @@ class UpDateAnswer(MethodView):
     """class to update an answer"""
 
     @jwt_required
-    def put(self, qstn_id, ans_id)
+    def put(self, qstn_id, ans_id):
         try:
             qstn_id_validation = validate.validate_entered_id(qstn_id)
             if qstn_id_validation:
@@ -202,8 +202,11 @@ post_question_view = PostQuestion.as_view("post_question_view")
 fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
 fetch_one_question_view = FetchSingleQuestion.as_view("fetch_one_question_view")
 post_answer_view = PostAnswerToQuestion.as_view("post_answer_view")
+update_answer_view = UpDateAnswer.as_view("update_answer_view")
 
 question_blueprint.add_url_rule("/api/v1/questions", view_func=post_question_view, methods=["POST"])
 question_blueprint.add_url_rule("/api/v1/questions", view_func=fetch_questions_view, methods=["GET"])
 question_blueprint.add_url_rule("/api/v1/questions/<qstn_id>", view_func=fetch_one_question_view, methods=["GET"])
 question_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers", view_func=post_answer_view, methods=["POST"])
+question_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers/<ans_id>", view_func=update_answer_view,
+                                methods=["PUT"])
