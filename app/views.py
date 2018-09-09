@@ -18,3 +18,11 @@ class PostQuestion(MethodView):
 
     @jwt_required
     def post(self):
+        try:
+            data = request.get_json()
+
+            search_keys = ("title", "question")
+
+            if all(key in data.keys() for key in search_keys):
+                now = datetime.datetime.now()
+                date = now.strftime("%Y-%m-%d %H:%M")
