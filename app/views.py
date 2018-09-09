@@ -80,6 +80,13 @@ class FetchSingleQuestion(MethodView):
             return jsonify({"message": "Check your url and try again"}), 400
 
 
+class PostAnswerToQuestion(MethodView):
+    """class to post an answer to a question"""
+
+    @jwt_required
+    def post(self, qstn_id):
+
+
 post_question_view = PostQuestion.as_view("post_question_view")
 fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
 fetch_one_question_view = FetchSingleQuestion.as_view("fetch_one_question_view")
