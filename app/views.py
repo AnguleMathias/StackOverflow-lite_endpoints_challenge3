@@ -136,6 +136,9 @@ class PostAnswerToQuestion(MethodView):
                     status=status,
                     date=date)
                 return jsonify({'New Answer Posted': new_answer.__dict__}), 201
+            return jsonify({"message": "a 'key' is missing in your answer body"}), 400
+        except Exception as exception:
+            return jsonify({"message": exception}), 400
 
 
 post_question_view = PostQuestion.as_view("post_question_view")
