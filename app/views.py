@@ -29,10 +29,10 @@ class PostQuestion(MethodView):
                 loggedin_user = get_jwt_identity()
                 user = get_user_by_username(user_name=loggedin_user)
 
-                qstn_owner = user["username"]
+                # qstn_owner = user["username"]
                 title = data.get("title").strip()
                 question = data.get("question").strip()
-                date = now.strftime("%Y-%m-%d %H:%M")
+                # date = now.strftime("%Y-%m-%d %H:%M")
 
                 validation = validate.validate_question(title, question)
                 if validation:
@@ -42,11 +42,11 @@ class PostQuestion(MethodView):
                 if does_qstn_exist:
                     return jsonify({"message":"Question already exists, check it out for an answer"}), 409
 
-                post_new_question(title=title, question=question, qstn_owner=qstn_owner, date=date)
+                post_new_question(title=title, question=question)
 
-                new_question = Question(title=title, question=question, qstn_owner=qstn_owner, date=date)
+                new_question = Question(title=title, question=question)
                 return jsonify({"New Question Posted": new_question.__dict__}), 201
-            return jsonify({"message": "a 'key(s)' is missing in your question body"}), 400
+                # return jsonify({"message": "a 'key(s)' is missing in your question body"}), 400
         except:
             return jsonify({"message": "All fields are required"}), 400
 
