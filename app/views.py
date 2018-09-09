@@ -95,6 +95,10 @@ class PostAnswerToQuestion(MethodView):
                 vote = 0
                 status = "pending"
 
+                loggedin_user = get_jwt_identity()
+                user = get_user_by_username(user_name=loggedin_user)
+                ans_owner = user["username"]
+
 
 post_question_view = PostQuestion.as_view("post_question_view")
 fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
