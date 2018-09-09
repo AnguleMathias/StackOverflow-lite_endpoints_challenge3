@@ -198,6 +198,13 @@ class UpDateAnswer(MethodView):
             return jsonify({"message": exception}), 400
 
 
+class FetchAllUserQuestions(MethodView):
+    """class to fetch all the questions a user ever asked"""
+
+    @jwt_required
+    def get(self):
+
+
 post_question_view = PostQuestion.as_view("post_question_view")
 fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
 fetch_one_question_view = FetchSingleQuestion.as_view("fetch_one_question_view")
