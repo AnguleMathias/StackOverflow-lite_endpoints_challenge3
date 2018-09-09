@@ -54,6 +54,12 @@ class PostQuestion(MethodView):
 class FetchAllQuestions(MethodView):
     """Class to fetch all questions posted"""
     @jwt_required
+    def get(self):
+        all_questions = get_all_questions()
+        if all_questions:
+            return jsonify({"All Questions": all_questions}), 200
+        return jsonify({"message": "No questions posted yet"}), 404
+
 
 
 post_question_view = PostQuestion.as_view("post_question_view")
