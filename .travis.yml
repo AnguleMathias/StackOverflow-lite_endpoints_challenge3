@@ -1,0 +1,22 @@
+language: python
+
+python:
+  - "3.6.5"
+
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls
+  - pip install pytest-cov
+
+services:
+  - postgresql
+
+before_script:
+  - psql -c 'create database stackoverflow;' -U postgres
+  - psql -c 'create database stackoverflow_tests;' -U postgres
+
+script:
+  - python3 -m pytest --cov=app
+
+after_success:
+- coveralls
