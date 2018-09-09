@@ -37,3 +37,8 @@ class PostQuestion(MethodView):
                 validation = validate.validate_question(title, question)
                 if validation:
                     return validation
+
+                does_qstn_exist = is_question_exist(question)
+                if does_qstn_exist:
+                    return jsonify({"message":"Question already exists, check it out for an answer"}), 409
+
