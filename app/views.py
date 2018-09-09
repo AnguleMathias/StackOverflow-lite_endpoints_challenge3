@@ -42,3 +42,5 @@ class PostQuestion(MethodView):
                 if does_qstn_exist:
                     return jsonify({"message":"Question already exists, check it out for an answer"}), 409
 
+                post_new_question(title=title, question=question, qstn_owner=qstn_owner, date=date)
+
