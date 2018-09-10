@@ -40,7 +40,7 @@ class PostQuestion(MethodView):
 
                 does_qstn_exist = is_question_exist(question)
                 if does_qstn_exist:
-                    return jsonify({"message":"Question already exists, check it out for an answer"}), 409
+                    return jsonify({"message": "Question already exists, check it out for an answer"}), 409
 
                 post_new_question(title=title, question=question, qstn_owner=qstn_owner, date=date)
 
@@ -53,6 +53,7 @@ class PostQuestion(MethodView):
 
 class FetchAllQuestions(MethodView):
     """Class to fetch all questions posted"""
+
     @jwt_required
     def get(self):
         all_questions = get_all_questions()
@@ -82,6 +83,7 @@ class FetchSingleQuestion(MethodView):
 
 class PostAnswerToQuestion(MethodView):
     """class to post an answer to a question"""
+
     @jwt_required
     def post(self, qstn_id):
         try:
@@ -113,9 +115,9 @@ class PostAnswerToQuestion(MethodView):
 
                 does_answer_exist = is_answer_exist(qstn_id=qstn_id, answer=answer)
                 if does_answer_exist:
-                    return jsonify({"message":
-                            "Such an answer is already given for this same question, please try with another one"
-                            }), 409
+                    return jsonify({"message": "Such an answer is already given for this same question, please try "
+                                               "with another one "
+                                    }), 409
 
                 does_qstn_exist = get_question_by_id(qstn_id=qstn_id)
                 if not does_qstn_exist:
@@ -200,6 +202,7 @@ class UpDateAnswer(MethodView):
 
 class FetchAllUserQuestions(MethodView):
     """class to fetch all the questions a user ever asked"""
+
     @jwt_required
     def get(self):
         loggedin_user = get_jwt_identity()

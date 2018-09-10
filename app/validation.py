@@ -40,18 +40,18 @@ class FieldValidation:
 
     def validate_email(self, email):
         if len(email) > 7:
-            if re.match("[^@]+@[^@]+\.[^@]+", email) != None:
+            if re.match("[^@]+@[^@]+[^@]+", email) is not None:
                 return True
             return False
         return False
 
     def validate_type(self, input):
-        if re.match("^[1-9]\d*(\.\d+)?$", input) != None:
+        if re.match("^[1-9]\d*(\d+)?$", input) is not None:
             return True
         return False
 
     def validate_characters(self, input):
-        if re.search('[a-zA-Z]', input) != None:
+        if re.search('[a-zA-Z]', input) is not None:
             return True
         return False
 

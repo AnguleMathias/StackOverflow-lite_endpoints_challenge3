@@ -23,6 +23,10 @@ def is_user_exist(user_name):
 
 
 def get_user_by_username(user_name, password):
+    """
+
+    :rtype: object
+    """
     query = ("""SELECT * from users where username = '{}' and password = '{}'""".format(user_name, password))
     cursor.execute(query)
     user_name = cursor.fetchone()
