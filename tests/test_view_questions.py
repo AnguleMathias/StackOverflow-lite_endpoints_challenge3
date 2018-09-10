@@ -142,8 +142,8 @@ class TestViewQuestion(BaseTestCase):
                                     headers=dict(Authorization='Bearer ' + reply2[1]['token']))
 
         reply = json.loads(response3.data)
-        self.assertEqual(reply.get("message"), "Question not deleted, or doesn't exist")
-        self.assertEqual(response3.status_code, 400)
+        self.assertEqual(reply.get("message"), "Requested URL is invalid")
+        self.assertEqual(response3.status_code, 405)
 
     def test_viewing_all_user_questions_(self):
         """ Test viewing questions """

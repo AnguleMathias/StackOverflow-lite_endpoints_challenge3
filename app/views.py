@@ -20,14 +20,13 @@ class PostQuestion(MethodView):
     def post(self):
         try:
             data = request.get_json()
-
             search_keys = ("title", "question")
 
             if all(key in data.keys() for key in search_keys):
                 now = datetime.datetime.now()
 
                 loggedin_user = get_jwt_identity()
-                user = get_user_by_username(user_name=loggedin_user)
+                user = get_user_by_username(user_name=loggedin_user["username"], password=loggedin_user["password"])
 
                 qstn_owner = user["username"]
                 title = data.get("title").strip()
@@ -35,6 +34,7 @@ class PostQuestion(MethodView):
                 date = now.strftime("%Y-%m-%d %H:%M")
 
                 validation = validate.validate_question(title, question)
+
                 if validation:
                     return validation
 
@@ -206,7 +206,7 @@ class FetchAllUserQuestions(MethodView):
     @jwt_required
     def get(self):
         loggedin_user = get_jwt_identity()
-        user = get_user_by_username(user_name=loggedin_user)
+        user = get_user_by_username(user_name=loggedin_user["username"], password=loggedin_user["password"])
         qstn_owner = user["username"]
 
         user_questions = get_all_user_questions(user_name=qstn_owner)
