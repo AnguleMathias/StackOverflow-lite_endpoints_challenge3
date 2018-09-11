@@ -27,7 +27,7 @@ StackOverflow-lite is a platform where people can ask questions and provide answ
 
 Method | Endpoint | Functionality
 --- | --- | ---
-POST | `/api/v1/auth/signup` | Add a user
+POST | `/api/v1/auth/register` | Add a user
 POST | `/api/v1/auth/login` | Login a user
 
 #### Questions Endpoints
