@@ -95,7 +95,6 @@ class DeleteQuestion(MethodView):
             loggedin_user = get_jwt_identity()
 
             question_details = get_single_question(qstn_id=qstn_id)
-            print question_details
             if question_details:
                 delete_question(qstn_id, loggedin_user["username"])
                 return jsonify({"message": "Question successfully deleted"}), 200
