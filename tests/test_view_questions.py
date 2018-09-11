@@ -190,4 +190,4 @@ class TestViewQuestion(BaseTestCase):
                                   )
         response3 = self.app.get("/api/v1/questions/user_questions", content_type='application/json',
                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']), data={"qstn_id": "1"})
-        self.assertEquals(response3.status_code, 200)
+        self.assertEqual(response3.status_code, 200)
