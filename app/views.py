@@ -81,6 +81,29 @@ class FetchSingleQuestion(MethodView):
             return jsonify({"message": "Check your url and try again"}), 400
 
 
+class DeleteQuestion(MethodView):
+    """class to get single question"""
+
+    @jwt_required
+    def delete(self, qstn_id):
+        try:
+            # if type(qstn_id) is not int:
+            #     return jsonify({"message": "Question id should be an integer"}), 400
+            id_validation = validate.validate_entered_id(qstn_id)
+            if id_validation:
+                return id_validation
+            loggedin_user = get_jwt_identity()
+
+            question_details = get_single_question(qstn_id=qstn_id)
+            print question_details
+            if question_details:
+                delete_question(qstn_id, loggedin_user["username"])
+                return jsonify({"message": "Question successfully deleted"}), 200
+            return jsonify({"message": "Question does not exist"}), 404
+        except:
+            return jsonify({"message": "Check your url and try again"}), 400
+
+
 class PostAnswerToQuestion(MethodView):
     """class to post an answer to a question"""
 
@@ -98,7 +121,7 @@ class PostAnswerToQuestion(MethodView):
                 status = "pending"
 
                 loggedin_user = get_jwt_identity()
-                user = get_user_by_username(user_name=loggedin_user)
+                user = get_user_by_username(user_name=loggedin_user["username"], password=loggedin_user["password"])
                 ans_owner = user["username"]
 
                 id_validation = validate.validate_entered_id(qstn_id)
@@ -158,7 +181,7 @@ class UpDateAnswer(MethodView):
                 return ans_id_validation
 
             loggedin_user = get_jwt_identity()
-            user = get_user_by_username(user_name=loggedin_user)
+            user = get_user_by_username(user_name=loggedin_user["username"], password=loggedin_user["password"])
             current_user = user["username"]
 
             does_answer_exist = get_answer_by_id(ans_id=ans_id, qstn_id=qstn_id)
@@ -218,6 +241,7 @@ class FetchAllUserQuestions(MethodView):
 post_question_view = PostQuestion.as_view("post_question_view")
 fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
 fetch_one_question_view = FetchSingleQuestion.as_view("fetch_one_question_view")
+delete_one_question_view = DeleteQuestion.as_view("delete_one_question_view")
 post_answer_view = PostAnswerToQuestion.as_view("post_answer_view")
 update_answer_view = UpDateAnswer.as_view("update_answer_view")
 get_user_questions_view = FetchAllUserQuestions.as_view("get_user_questions_view")
@@ -225,6 +249,7 @@ get_user_questions_view = FetchAllUserQuestions.as_view("get_user_questions_view
 question_blueprint.add_url_rule("/api/v1/questions", view_func=post_question_view, methods=["POST"])
 question_blueprint.add_url_rule("/api/v1/questions", view_func=fetch_questions_view, methods=["GET"])
 question_blueprint.add_url_rule("/api/v1/questions/<qstn_id>", view_func=fetch_one_question_view, methods=["GET"])
+question_blueprint.add_url_rule("/api/v1/questions/<qstn_id>", view_func=delete_one_question_view, methods=["DELETE"])
 question_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers", view_func=post_answer_view, methods=["POST"])
 question_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers/<ans_id>", view_func=update_answer_view,
                                 methods=["PUT"])

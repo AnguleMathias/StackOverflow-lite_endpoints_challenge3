@@ -87,10 +87,14 @@ class TestViewQuestion(BaseTestCase):
                                   data=json.dumps(
                                       dict(title="What", question="What is your question?"), )
                                   )
+        respnse4 = self.app.get("api/v1/questions", content_type='application/json',
+                                    headers=dict(Authorization='Bearer ' + reply2[1]['token']))
+        print respnse4.data
         response3 = self.app.delete("/api/v1/questions/1", content_type='application/json',
                                     headers=dict(Authorization='Bearer ' + reply2[1]['token']))
 
         reply = json.loads(response3.data)
+
         self.assertEqual(reply.get("message"), "Question successfully deleted")
         self.assertEqual(response3.status_code, 200)
 
@@ -117,7 +121,7 @@ class TestViewQuestion(BaseTestCase):
                                     headers=dict(Authorization='Bearer ' + reply2[1]['token']))
 
         reply = json.loads(response3.data)
-        self.assertEqual(reply.get("message"), "Id should be an interger")
+        self.assertEqual(reply.get("message"), "Question id should be an integer")
         self.assertEqual(response3.status_code, 400)
 
     def test_deleting_non_existing_questions(self):
@@ -142,8 +146,9 @@ class TestViewQuestion(BaseTestCase):
                                     headers=dict(Authorization='Bearer ' + reply2[1]['token']))
 
         reply = json.loads(response3.data)
-        self.assertEqual(reply.get("message"), "Requested URL is invalid")
-        self.assertEqual(response3.status_code, 405)
+        print reply
+        self.assertEqual(reply.get("message"), "Question id should be an integer")
+        self.assertEqual(response3.status_code, 400)
 
     def test_viewing_all_user_questions_(self):
         """ Test viewing questions """
