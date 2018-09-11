@@ -89,17 +89,19 @@ class TestPostComment(BaseTestCase):
                                   headers=dict(Authorization='Bearer ' + reply2[1]['token']),
                                   data=json.dumps(dict(answer="What is your question?"), )
                                   )
-        response4 = self.app.post("/api/v1/questions/1/answers",
+        response4 = self.app.post("/api/v1/questions/2/answers/1/comments",
                                   content_type='application/json',
                                   headers=dict(Authorization='Bearer ' + reply2[1]['token']),
-                                  data=json.dumps(dict(answer="What is your question?"), )
+                                  data=json.dumps(dict(comment="What is your question?"), )
                                   )
-        reply4 = json.loads(response4.data)
-        self.assertEqual(reply4.get("message"), "Such an answer is already given for this same question, please try "
-                                                "with another one ")
-        self.assertEqual(response4.status_code, 409)
+        response5 = self.app.post("/api/v1/questions/2/answers/1/comments",
+                                  content_type='application/json',
+                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  data=json.dumps(dict(comment="What is your question?"), )
+                                  )
+        self.assertEqual(response5.status_code, 404)
 
-    def test_posting_answer_wrong_id(self):
+    def test_post_comment_bad_url(self):
         response1 = self.app.post("/api/v1/auth/register",
                                   content_type='application/json',
                                   data=json.dumps(
@@ -117,9 +119,13 @@ class TestPostComment(BaseTestCase):
                                   data=json.dumps(
                                       dict(title="What", question="What is your question?"), )
                                   )
-        response3 = self.app.post("/api/v1/questions/2/answers",
+        response3 = self.app.post("/api/v1/questions/1/answers",
                                   content_type='application/json',
                                   headers=dict(Authorization='Bearer ' + reply2[1]['token']),
-                                  data=json.dumps(dict(answer="What is your question?"), )
+                                  data=json.dumps(dict(answer="W?"), )
                                   )
-        self.assertEqual(response3.status_code, 404)
+        response4 = self.app.post("/api/v1/questions/1/answers/1/commen", content_type='application/json',
+                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  data=json.dumps(dict(comment="What is this??"), )
+                                  )
+        self.assertEqual(response4.status_code, 404)

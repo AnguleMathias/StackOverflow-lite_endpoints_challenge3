@@ -387,3 +387,28 @@ class TestPostAnswer(BaseTestCase):
         reply4 = json.loads(response4.data)
         self.assertEqual(reply4.get("message"), "Answer does not exist")
         self.assertEqual(response4.status_code, 404)
+
+    def test_posting_answer_wrong_url(self):
+        response1 = self.app.post("/api/v1/auth/register",
+                                  content_type='application/json',
+                                  data=json.dumps(
+                                      dict(username="angule", email="angule@gmail.com", password="mathias"), )
+                                  )
+        response = self.app.post("/api/v1/auth/login",
+                                 content_type='application/json',
+                                 data=json.dumps(dict(username="angule", password="mathias"))
+                                 )
+        reply2 = json.loads(response.data.decode())
+
+        response2 = self.app.post("/api/v1/questions",
+                                  content_type='application/json',
+                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  data=json.dumps(
+                                      dict(title="What", question="What is your question?"), )
+                                  )
+        response3 = self.app.post("/api/v1/questions/2/answer",
+                                  content_type='application/json',
+                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  data=json.dumps(dict(answer="What is your question?"), )
+                                  )
+        self.assertEqual(response3.status_code, 404)
