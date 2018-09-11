@@ -14,36 +14,26 @@ question_blueprint = Blueprint("question_blueprint", __name__)
 
 
 class PostQuestion(MethodView):
-    """class for posting new question"""
-
     @jwt_required
     def post(self):
         try:
             data = request.get_json()
             search_keys = ("title", "question")
-
             if all(key in data.keys() for key in search_keys):
                 now = datetime.datetime.now()
-
                 loggedin_user = get_jwt_identity()
                 user = get_user_by_username(user_name=loggedin_user["username"], password=loggedin_user["password"])
-
                 qstn_owner = user["username"]
                 title = data.get("title").strip()
                 question = data.get("question").strip()
                 date = now.strftime("%Y-%m-%d %H:%M")
-
                 validation = validate.validate_question(title, question)
-
                 if validation:
                     return validation
-
                 does_qstn_exist = is_question_exist(question)
                 if does_qstn_exist:
                     return jsonify({"message": "Question already exists, check it out for an answer"}), 409
-
                 post_new_question(title=title, question=question, qstn_owner=qstn_owner, date=date)
-
                 new_question = Question(title=title, question=question, qstn_owner=qstn_owner, date=date)
                 return jsonify({"New Question Posted": new_question.__dict__}), 201
             return jsonify({"message": "a 'key(s)' is missing in your question body"}), 400
@@ -52,8 +42,6 @@ class PostQuestion(MethodView):
 
 
 class FetchAllQuestions(MethodView):
-    """Class to fetch all questions posted"""
-
     @jwt_required
     def get(self):
         all_questions = get_all_questions()
@@ -63,15 +51,12 @@ class FetchAllQuestions(MethodView):
 
 
 class FetchSingleQuestion(MethodView):
-    """class to get single question"""
-
     @jwt_required
     def get(self, qstn_id):
         try:
             id_validation = validate.validate_entered_id(qstn_id)
             if id_validation:
                 return id_validation
-
             question_details = get_single_question(qstn_id=qstn_id)
             all_answers = get_all_answers_to_question(qstn_id=qstn_id)
             if question_details:
@@ -82,8 +67,6 @@ class FetchSingleQuestion(MethodView):
 
 
 class DeleteQuestion(MethodView):
-    """class to get single question"""
-
     @jwt_required
     def delete(self, qstn_id):
         try:
@@ -91,7 +74,6 @@ class DeleteQuestion(MethodView):
             if id_validation:
                 return id_validation
             loggedin_user = get_jwt_identity()
-
             question_details = get_single_question(qstn_id=qstn_id)
             if question_details:
                 delete_question(qstn_id, loggedin_user["username"])
@@ -102,14 +84,11 @@ class DeleteQuestion(MethodView):
 
 
 class FetchAllUserQuestions(MethodView):
-    """class to fetch all the questions a user ever asked"""
-
     @jwt_required
     def get(self):
         loggedin_user = get_jwt_identity()
         user = get_user_by_username(user_name=loggedin_user["username"], password=loggedin_user["password"])
         qstn_owner = user["username"]
-
         user_questions = get_all_user_questions(user_name=qstn_owner)
         if user_questions:
             return jsonify({"All Questions": user_questions}), 200
