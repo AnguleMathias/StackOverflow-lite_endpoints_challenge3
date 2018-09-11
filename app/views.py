@@ -219,7 +219,6 @@ class UpDateAnswer(MethodView):
                     return jsonify({"message": "No such answer exists"}), 404
                 return jsonify({"message": "No such question exists any more"}), 404
         except Exception as exception:
-            print(exception)
             return jsonify({"message": exception}), 400
 
 
