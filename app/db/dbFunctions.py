@@ -119,6 +119,16 @@ def is_answer_exist(qstn_id, answer):
     return False
 
 
+def is_comment_exist(ans_id, comment):
+    # check answer to question existence
+    query = ("""SELECT * FROM comments WHERE ans_id = '{}' and comment = '{}'""".format(ans_id, comment))
+    cursor.execute(query)
+    comment = cursor.fetchone()
+    if comment:
+        return True
+    return False
+
+
 def get_question_by_id(qstn_id):
     # check question existence
     query = ("""SELECT * FROM questions where qstn_id = '{}'""".format(qstn_id))
@@ -134,9 +144,7 @@ def get_answer_by_id(ans_id, qstn_id):
     query = ("""SELECT * FROM answers where ans_id = '{}' and qstn_id = '{}'""".format(ans_id, qstn_id))
     cursor.execute(query)
     answer = cursor.fetchone()
-    if answer:
-        return True
-    return False
+    return answer
 
 
 def post_new_answer(answer, ans_owner, qstn_id, vote, status, date):
@@ -144,6 +152,14 @@ def post_new_answer(answer, ans_owner, qstn_id, vote, status, date):
     query = (
         """INSERT INTO answers (answer, ans_owner, qstn_id, votes, status, date) 
         VALUES ('{}', '{}', '{}','{}', '{}', '{}')""".format(answer, ans_owner, qstn_id, vote, status, date))
+    cursor.execute(query)
+
+
+def post_new_comment(comment, comment_owner, ans_id, date):
+    # post a new answer
+    query = (
+        """INSERT INTO comments (comment, comment_owner, ans_id, date) 
+        VALUES ('{}', '{}', '{}', '{}')""".format(comment, comment_owner, ans_id, date))
     cursor.execute(query)
 
 

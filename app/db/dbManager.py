@@ -58,7 +58,7 @@ class DBConnection:
 
             """CREATE TABLE IF NOT EXISTS comments (
                 comment_id SERIAL PRIMARY KEY, comment VARCHAR(250) NOT NULL, comment_owner VARCHAR(20) NOT NULL,
-                ans_id INTEGER NOT NULL, date timestamp NOT NULL)"""
+                qstn_id INTEGER NOT NULL, ans_id INTEGER NOT NULL, date timestamp NOT NULL)"""
         )
         for query in queries:
             self.cursor.execute(query)

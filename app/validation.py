@@ -60,3 +60,9 @@ class FieldValidation:
             return jsonify({"message": "No answer was given"}), 400
         if len(answer) < 10:
             return jsonify({"message": "Answer has to be at least 10 characters long"}), 400
+
+    def validate_comment(self, comment):
+        if not comment:
+            return jsonify({"message": "No comment was given"}), 400
+        if len(comment) < 5:
+            return jsonify({"message": "Comment has to be at least 3 characters long"}), 400

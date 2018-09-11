@@ -40,8 +40,9 @@ class Answer:
 
 
 class Comment:
-    def __init__(self, comment, comment_owner, ans_id, date):
+    def __init__(self, comment, comment_owner, qstn_id, ans_id, date):
         self.comment = comment
         self.comment_owner = comment_owner
+        self.qstn_id = qstn_id
         self.ans_id = ans_id
         self.date = date

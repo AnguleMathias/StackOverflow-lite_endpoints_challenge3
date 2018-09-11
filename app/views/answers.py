@@ -5,7 +5,7 @@ from flask.views import MethodView
 from flask_jwt_extended import get_jwt_identity, jwt_required
 
 from app.db.dbFunctions import get_user_by_username, get_single_question, get_question_by_id, is_answer_exist, \
-    post_new_answer, update_answer, get_answer_details, accept_answer, get_answer_by_id
+    post_new_answer, update_answer, get_answer_details, accept_answer, get_answer_by_id, get_all_answers_to_question
 from app.models import Answer
 from app.validation import FieldValidation
 
@@ -102,9 +102,27 @@ class UpDateAnswer(MethodView):
             return jsonify({"message": exception}), 400
 
 
+class GetAnswer(MethodView):
+    @jwt_required
+    def get(self, ans_id, qstn_id):
+        try:
+            id_validation = validate.validate_entered_id(ans_id)
+            if id_validation:
+                return id_validation
+            answer_details = get_answer_by_id(qstn_id=qstn_id, ans_id=ans_id)
+            if answer_details:
+                return jsonify({"Answer Details": answer_details}), 200
+            return jsonify({"message": "Answer does not exist"}), 404
+        except:
+            return jsonify({"message": "Check your url and try again"}), 400
+
+
 post_answer_view = PostAnswerToQuestion.as_view("post_answer_view")
 update_answer_view = UpDateAnswer.as_view("update_answer_view")
+get_answer_view = GetAnswer.as_view("get_answer_view")
 
 answer_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers", view_func=post_answer_view, methods=["POST"])
+answer_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers/<ans_id>", view_func=get_answer_view,
+                              methods=["GET"])
 answer_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers/<ans_id>", view_func=update_answer_view,
                               methods=["PUT"])
