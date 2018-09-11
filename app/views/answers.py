@@ -5,7 +5,8 @@ from flask.views import MethodView
 from flask_jwt_extended import get_jwt_identity, jwt_required
 
 from app.db.dbFunctions import get_user_by_username, get_single_question, get_question_by_id, is_answer_exist, \
-    post_new_answer, update_answer, get_answer_details, accept_answer, get_answer_by_id, get_all_answers_to_question
+    post_new_answer, update_answer, get_answer_details, accept_answer, get_answer_by_id, get_all_answers_to_question, \
+    delete_answer
 from app.models import Answer
 from app.validation import FieldValidation
 
@@ -133,12 +134,11 @@ class DeleteAnswer(MethodView):
             id_validation = validate.validate_entered_id(ans_id)
             if id_validation:
                 return id_validation
-            loggedin_user = get_jwt_identity()
             answer_details = get_answer_by_id(ans_id=ans_id, qstn_id=qstn_id)
             if answer_details:
-                delete_question(qstn_id, loggedin_user["username"])
-                return jsonify({"message": "Question successfully deleted"}), 200
-            return jsonify({"message": "Question does not exist"}), 404
+                delete_answer(ans_id, qstn_id)
+                return jsonify({"message": "Answer successfully deleted"}), 200
+            return jsonify({"message": "Answer does not exist"}), 404
         except:
             return jsonify({"message": "Check your url and try again"}), 400
 
