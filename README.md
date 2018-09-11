@@ -38,6 +38,7 @@ Method | Endpoint | Functionality
 POST | `/api/v1/questions` | Add a question
 GET | `/api/v1/questions` | Lists all questions
 GET | `/api/v1/questions/<question_id>` | Retrieve a question
+GET | `/api/v1/questions/user_questions` | Retrieve single user questions
 PUT | `/api/v1/questions/>question_id>` | Edit a question of a logged in user
 DELETE | `/api/v1/questions/<question_id>` | Delete a question of a logged in user
 
@@ -46,14 +47,14 @@ DELETE | `/api/v1/questions/<question_id>` | Delete a question of a logged in us
 Method | Endpoint | Functionality
 --- | --- | ---
 POST | `/api/v1/questions/<question_id>/answers` | Add answer
-GET | `/api/v1/questions/<qstn_id>/answers/<ans_id>` | View an answer
-GET | `/api/v1/questions/<qstn_id>/answers` | View all answers to a question
-PUT | `/api/v1/questions/<qstn_id>/answers/<ans_id>` | Update an answer 
-DELETE | `/api/v1/questions/<qstn_id>/answers/<ans_id>` | Delete an answer
+GET | `/api/v1/questions/<question_id>/answers/<answer_id>` | View an answer
+GET | `/api/v1/questions/<question_id>/answers` | View all answers to a question
+PUT | `/api/v1/questions/<question_id>/answers/<answer_id>` | Update an answer 
+DELETE | `/api/v1/questions/<question_id>/answers/<answer_id>` | Delete an answer
                              
 
 
-#### Comments Endpoints
+#### Comment Endpoints
 
 Method | Endpoint | Functionality
 --- | --- | ---
