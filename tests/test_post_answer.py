@@ -325,11 +325,8 @@ class TestPostAnswer(BaseTestCase):
                                   data=json.dumps(
                                       dict(title="What", question="What is your question?"), )
                                   )
-        response3 = self.app.post("/api/v1/questions/1/answers",
-                                  content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
-                                  data=json.dumps(dict(answer="What is your answer?"), )
-                                  )
         response3 = self.app.get("/api/v1/questions/1/answers", content_type='application/json',
                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']))
-        self.assertEqual(response3.status_code, 200)
+        reply = json.loads(response3.data)
+        self.assertEqual(reply.get("message"), "Answer does not exist")
+        self.assertEqual(response3.status_code, 404)
