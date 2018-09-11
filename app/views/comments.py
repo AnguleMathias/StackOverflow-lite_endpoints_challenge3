@@ -5,7 +5,7 @@ from flask.views import MethodView
 from flask_jwt_extended import get_jwt_identity, jwt_required
 
 from app.db.dbFunctions import get_user_by_username, get_answer_by_id, is_comment_exist, \
-    post_new_comment, get_question_by_id
+    post_new_comment, get_question_by_id, get_all_comments_to_answers
 from app.models import Comment
 from app.validation import FieldValidation
 
@@ -62,11 +62,11 @@ class PostCommentToAnswer(MethodView):
 
 class GetComments(MethodView):
     @jwt_required
-    def get(self, qstn_id):
-        all_comments = get_all_answers_to_question(qstn_id=qstn_id)
+    def get(self, ans_id, qstn_id):
+        all_comments = get_all_comments_to_answers(ans_id=ans_id, qstn_id=qstn_id)
         if all_comments:
             return jsonify({"Answers": all_comments}), 200
-        return jsonify({"message": "Question does not exist"}), 404
+        return jsonify({"message": "Comments do not exist"}), 404
 
 
 get_comments_view = GetComments.as_view("get_comments_view")
