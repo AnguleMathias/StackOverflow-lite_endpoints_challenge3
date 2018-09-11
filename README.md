@@ -3,7 +3,7 @@ StackOverflow-lite is a platform where people can ask questions and provide answ
 
 ## Badges
 [![Build Status](https://travis-ci.org/AnguleMathias/StackOverflow-lite_endpoints_challenge3.svg?branch=develop)](https://travis-ci.org/AnguleMathias/StackOverflow-lite_endpoints_challenge3)
-[![Coverage Status](https://coveralls.io/repos/github/AnguleMathias/StackOverflow-lite_endpoints_challenge3/badge.svg?branch=develop)](https://coveralls.io/github/AnguleMathias/StackOverflow-lite_endpoints_challenge3?branch=develop)
+
 [![Maintainability](https://api.codeclimate.com/v1/badges/7038ca41e9952afc5ece/maintainability)](https://codeclimate.com/github/AnguleMathias/StackOverflow-lite_endpoints_challenge3/maintainability)
 
 
