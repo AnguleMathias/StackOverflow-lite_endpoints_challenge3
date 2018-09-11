@@ -1,0 +1,394 @@
+FORMAT: 1A
+HOST:https://dashboard.heroku.com/apps/stack-overflow-lite-angule/api/v1
+
+# StackOverflow-lite
+
+StackOverflow-lite is a platform where people can ask questions and provide answers.
+## Registration [/auth/register]
+
+### User Registration [POST]
+
++ username (required, string) - A valid username
++ email (required, string) - A valid email
++ password (required, string) - Should be at least 5 characters long
+
++ Request (application/json)
+
+        {
+                "username": "angule",
+                "email": "angule@gmail.com",
+                "password": "mathias"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "New User Created": {
+                "email": "mathias@gmail.com",
+                "password": "$2b$12$K7y5Q2Ny3viXIzb9/8ICB.ESRLv8YM9voe.6Lkal8FQLQHnPMd00W",
+                "username": "angule"
+            }
+        }
+
++ Response 409 (application/json)
+
+        {
+            "message": "Username already exists"
+        }
+
+
+## Login [/auth/login]
+### User Login [POST]
++ user_name (required, string) - A registered username
++ password (required, string) - a valid password
+
+
++ Request (application/json)
+
+        { 
+            "username":"angule", 
+            "password":"mathias" 
+        }
+
++ Response 200 (application/json)
+
+        [
+            "Successful login",
+            {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4YjU4YTg4YS1iNWViLTQzOTgtYWZmZS05NGZjZmE3OTgxYzciLCJleHAiOjE1MzY2ODQ3NDgsImZyZXNoIjpmYWxzZSwiaWF0IjoxNTM2NjgzODQ4LCJ0eXBlIjoiYWNjZXNzIiwibmJmIjoxNTM2NjgzODQ4LCJpZGVudGl0eSI6eyJ1c2VybmFtZSI6ImFuZ3VsZSIsInBhc3N3b3JkIjoibWF0aGlhcyIsInVzZXJfaWQiOjEsImVtYWlsIjoibWF0aGlhc0BnbWFpbC5jb20ifX0.G-gtMgbJ3zl4-HEYRUJVUpMKRPacZ-uCvNxvXQP6YwQ"
+            }
+        ]
+
++ Response 404 (application/json)
+
+        {
+            "message": "user does not exist, register and login again"
+        }
+    
+
+## Questions Collection [/questions]
+
+### User can create a question [POST]
+
++ title (required, string) - Question title
++ question (required, string) - Question description body
+
++ Request (application/json)
+    
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MGFiN2NmYi1jNDRmLTQ5MmQtODNhMy02YWRkNDVjN2JhMTgiLCJleHAiOjE1MzY2ODUyMDksImZyZXNoIjpmYWxzZSwiaWF0IjoxNTM2Njg0MzA5LCJ0eXBlIjoiYWNjZXNzIiwibmJmIjoxNTM2Njg0MzA5LCJpZGVudGl0eSI6eyJ1c2VybmFtZSI6ImFuZ3VsZSIsInBhc3N3b3JkIjoibWF0aGlhcyIsInVzZXJfaWQiOjEsImVtYWlsIjoibWF0aGlhc0BnbWFpbC5jb20ifX0.4AQ-1c2Il3QJQ0UyE4p_APIu4UyBB9Uh7igxqmP7dXw
+
+    + Body
+
+            { 
+                "title":"What?", 
+                "question":"what is your question?"
+            }
+
++ Response 201 (application/json)
+
+        {
+            "New Question Posted": {
+                "date": "2018-09-11 19:48",
+                "qstn_owner": "angule",
+                "question": "what is your question?",
+                "title": "What?"
+            }
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "No question title was given"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "No question was given"
+        }
+   
+### User can list all questions [GET]
+This action fetches all the questions in the database.
++ Request (application/json)
+    
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MGFiN2NmYi1jNDRmLTQ5MmQtODNhMy02YWRkNDVjN2JhMTgiLCJleHAiOjE1MzY2ODUyMDksImZyZXNoIjpmYWxzZSwiaWF0IjoxNTM2Njg0MzA5LCJ0eXBlIjoiYWNjZXNzIiwibmJmIjoxNTM2Njg0MzA5LCJpZGVudGl0eSI6eyJ1c2VybmFtZSI6ImFuZ3VsZSIsInBhc3N3b3JkIjoibWF0aGlhcyIsInVzZXJfaWQiOjEsImVtYWlsIjoibWF0aGlhc0BnbWFpbC5jb20ifX0.4AQ-1c2Il3QJQ0UyE4p_APIu4UyBB9Uh7igxqmP7dXw
+
+
++ Response 200 (application/json)
+        
+        {
+            "All Questions": [
+                {
+                    "date": "Tue, 11 Sep 2018 19:48:00 GMT",
+                    "qstn_id": 1,
+                    "qstn_owner": "angule",
+                    "question": "what is your question?",
+                    "title": "What?"
+                }
+            ]
+        }   
+        
+
++ Response 400 (application/json)
+        
+        {
+            "message": "Question does not exist"
+        }
+        
+
+## Delete question collection [/questions/1]
+
+### User can delete a question [DELETE]
+User can delete a question using this action.
+
+
++ Request (application/json)
+   
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MGFiN2NmYi1jNDRmLTQ5MmQtODNhMy02YWRkNDVjN2JhMTgiLCJleHAiOjE1MzY2ODUyMDksImZyZXNoIjpmYWxzZSwiaWF0IjoxNTM2Njg0MzA5LCJ0eXBlIjoiYWNjZXNzIiwibmJmIjoxNTM2Njg0MzA5LCJpZGVudGl0eSI6eyJ1c2VybmFtZSI6ImFuZ3VsZSIsInBhc3N3b3JkIjoibWF0aGlhcyIsInVzZXJfaWQiOjEsImVtYWlsIjoibWF0aGlhc0BnbWFpbC5jb20ifX0.4AQ-1c2Il3QJQ0UyE4p_APIu4UyBB9Uh7igxqmP7dXw
+    
+
++ Response 200 (application/json)
+
+        {
+            "message": "Question successfully deleted"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "message": "question does not exists"
+        }
+
+## User questions collection [/questions/user_questions]
+
+### Logged in User can list his/her question [GET]
+Fetches all questions belonging to the user logged in.
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MGFiN2NmYi1jNDRmLTQ5MmQtODNhMy02YWRkNDVjN2JhMTgiLCJleHAiOjE1MzY2ODUyMDksImZyZXNoIjpmYWxzZSwiaWF0IjoxNTM2Njg0MzA5LCJ0eXBlIjoiYWNjZXNzIiwibmJmIjoxNTM2Njg0MzA5LCJpZGVudGl0eSI6eyJ1c2VybmFtZSI6ImFuZ3VsZSIsInBhc3N3b3JkIjoibWF0aGlhcyIsInVzZXJfaWQiOjEsImVtYWlsIjoibWF0aGlhc0BnbWFpbC5jb20ifX0.4AQ-1c2Il3QJQ0UyE4p_APIu4UyBB9Uh7igxqmP7dXw
+    
++ Response 200 (application/json)
+    
+        {
+            "All Questions": [
+                {
+                    "date": "Tue, 11 Sep 2018 20:22:00 GMT",
+                    "qstn_id": 3,
+                    "qstn_owner": "angule",
+                    "question": "What is the question?",
+                    "title": "What?"
+                }
+            ]
+        }
+
+## Answers POST collections [/questions/{question_id}/answers]
+
+
+### User can post an answer [POST]
+User can add an answer to the target question
+
+
++ Parameters
+    + question_id: 1 (required, integer) - ID of the Question
+
+
++ Request (application/json)
+    
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MGFiN2NmYi1jNDRmLTQ5MmQtODNhMy02YWRkNDVjN2JhMTgiLCJleHAiOjE1MzY2ODUyMDksImZyZXNoIjpmYWxzZSwiaWF0IjoxNTM2Njg0MzA5LCJ0eXBlIjoiYWNjZXNzIiwibmJmIjoxNTM2Njg0MzA5LCJpZGVudGl0eSI6eyJ1c2VybmFtZSI6ImFuZ3VsZSIsInBhc3N3b3JkIjoibWF0aGlhcyIsInVzZXJfaWQiOjEsImVtYWlsIjoibWF0aGlhc0BnbWFpbC5jb20ifX0.4AQ-1c2Il3QJQ0UyE4p_APIu4UyBB9Uh7igxqmP7dXw
+    
+    + Body
+    
+            {                
+                "answer": "So many questions"
+            }
+
+
++ Response 201 (application/json)
+
+        {
+            "New Answer Posted": {
+                "ans_owner": "angule",
+                "answer": "So many questions",
+                "date": "2018-09-11 20:26",
+                "qstn_id": "1",
+                "status": "pending",
+                "vote": 0
+            }
+        }
+        
++ Response 404 (application/json)
+
+        {
+            "message": "No such question exists"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Id should be an interger"
+        }
+
+
+## Answer: List all answers [/questions/{question_id}/answers]
+
+### User can list all answers [GET]
+
++ Parameters
+    + question_id: 1 (required, integer) - ID of the Question
+
+
++ Request (application/json)
+    
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MGFiN2NmYi1jNDRmLTQ5MmQtODNhMy02YWRkNDVjN2JhMTgiLCJleHAiOjE1MzY2ODUyMDksImZyZXNoIjpmYWxzZSwiaWF0IjoxNTM2Njg0MzA5LCJ0eXBlIjoiYWNjZXNzIiwibmJmIjoxNTM2Njg0MzA5LCJpZGVudGl0eSI6eyJ1c2VybmFtZSI6ImFuZ3VsZSIsInBhc3N3b3JkIjoibWF0aGlhcyIsInVzZXJfaWQiOjEsImVtYWlsIjoibWF0aGlhc0BnbWFpbC5jb20ifX0.4AQ-1c2Il3QJQ0UyE4p_APIu4UyBB9Uh7igxqmP7dXw
+    
+
++ Response 200 (application/json)
+
+            {
+                "Answers": [
+                    {
+                        "ans_id": 1,
+                        "ans_owner": "angule",
+                        "answer": "So many questions",
+                        "date": "Tue, 11 Sep 2018 20:26:00 GMT",
+                        "qstn_id": 1,
+                        "status": "pending",
+                        "votes": 0
+                    },
+                    {
+                        "ans_id": 2,
+                        "ans_owner": "angule",
+                        "answer": "i dont have a question",
+                        "date": "Tue, 11 Sep 2018 20:43:00 GMT",
+                        "qstn_id": 1,
+                        "status": "pending",
+                        "votes": 0
+                    }
+                ]
+            }
+
+
+## Answers: Fetch single [/questions/answers/{answer_id}]
+
+### User can retrieve an answer [GET]
+
++ Parameters
+    + answer_id: 1 (required, integer) - ID of answer 
+
++ Response 200 (application/json)
+
+            {
+                "Answer Details": {
+                    "ans_id": 1,
+                    "ans_owner": "angule",
+                    "answer": "So many questions",
+                    "date": "Tue, 11 Sep 2018 20:26:00 GMT",
+                    "qstn_id": 3,
+                    "status": "pending",
+                    "votes": 0
+                }
+            }
+
++ Response 404 (application/json)
+
+            {
+                "message": "Answer does not exist"
+            }
+
++ Response 400 (application/json)
+
+            {
+                "message": "Id should be an interger"
+            }
+            
+            
+## Answer PUT/DELETE collections [/questions/{question_id}/answers/{answer_id}]
+
+
+### User can update answer [PUT]
+
++ Parameters
+    + answer_id: 1 (required, integer) - ID of the answer
+    + question_id: 1 (required, integer) - ID of the question
+    
++ Request (applicatino/json)
+
+        { 
+            "answer":"i dont have a question, i am fine"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "Updated answer": {
+                "ans_id": 2,
+                "ans_owner": "angule",
+                "answer": "i dont have a question, i am fine",
+                "date": "Tue, 11 Sep 2018 20:43:00 GMT",
+                "qstn_id": 3,
+                "status": "pending",
+                "votes": 0
+            },
+            "message": "Answer successfully updated"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Please provide correct answer and question id",
+            "status": "fail"
+        }
+
+
+### User can delete an answer [DELETE]
+
++ Parameters
+    + answer_id: 1 (required, integer) - ID of the answer
+    + question_id: 1 (required, integer) - ID of the question
+
++ Response 200 (application/json)
+
+        {
+            "message": "Answer deleted successful",
+            "status": "success"
+        }
++ Response 400 (application/json)
+
+        {
+            "message": "Answer id does not exist",
+            "status": "fail"
+        }
+        
+## Comments collection [/questions/{question_id}/answers/{answer_id}/comments]
+
+
+### User can comment on an answer [POST]
+
++ Parameters
+    + answer_id: 1 (required, integer) - ID of the answer
+    + question_id: 1 (required, integer) - ID of the question
+
++ Request (application/json)
+
+        {
+            "comment": "comment goes here"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "message": "Comment successfull added",
+            
+        }
