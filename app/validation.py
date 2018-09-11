@@ -46,7 +46,7 @@ class FieldValidation:
         return False
 
     def validate_type(self, input):
-        if re.match("^[1-9]\d*(\d+)?$", input) is not None:
+        if re.match("^[1-9]*(\d+)?$", input) is not None:
             return True
         return False
 
