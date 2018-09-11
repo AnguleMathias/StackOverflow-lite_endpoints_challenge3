@@ -126,10 +126,28 @@ class GetAnswers(MethodView):
             return jsonify({"message": "Question does not exist"}), 404
 
 
+class DeleteAnswer(MethodView):
+    @jwt_required
+    def delete(self, ans_id, qstn_id):
+        try:
+            id_validation = validate.validate_entered_id(ans_id)
+            if id_validation:
+                return id_validation
+            loggedin_user = get_jwt_identity()
+            answer_details = get_answer_by_id(ans_id=ans_id, qstn_id=qstn_id)
+            if answer_details:
+                delete_question(qstn_id, loggedin_user["username"])
+                return jsonify({"message": "Question successfully deleted"}), 200
+            return jsonify({"message": "Question does not exist"}), 404
+        except:
+            return jsonify({"message": "Check your url and try again"}), 400
+
+
 get_answers_view = GetAnswers.as_view("get_answers_view")
 post_answer_view = PostAnswerToQuestion.as_view("post_answer_view")
 update_answer_view = UpDateAnswer.as_view("update_answer_view")
 get_answer_view = GetAnswer.as_view("get_answer_view")
+delete_one_answer_view = DeleteAnswer.as_view("delete_one_answer_view")
 
 answer_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers", view_func=get_answers_view, methods=["GET"])
 answer_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers", view_func=post_answer_view, methods=["POST"])
@@ -137,3 +155,5 @@ answer_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers/<ans_id>", vi
                               methods=["GET"])
 answer_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers/<ans_id>", view_func=update_answer_view,
                               methods=["PUT"])
+answer_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers/<ans_id>", view_func=delete_one_answer_view,
+                              methods=["DELETE"])

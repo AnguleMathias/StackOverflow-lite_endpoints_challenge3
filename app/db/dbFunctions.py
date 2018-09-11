@@ -93,6 +93,21 @@ def delete_question(qstn_id, user_name):
         return jsonify({"message": str(exception)}), 400
 
 
+def delete_answer(qstn_id, ans_id):
+    try:
+        query = ("""DELETE FROM answers WHERE qstn_id = '{}' and ans_id = '{}'""".format(qstn_id, ans_id))
+        cursor.execute(query)
+        delete = cursor.rowcount
+
+        if int(delete) > 0:
+            return jsonify({"message": "Answer successfully deleted"}), 200
+        else:
+            return jsonify({"message": "Answer not deleted, or doesn't exist"}), 400
+
+    except Exception as exception:
+        return jsonify({"message": str(exception)}), 400
+
+
 def truncate_answers(qstn_id):
     # function to delete question inside answers table, but not the table itself
     try:
