@@ -10,9 +10,7 @@ from app.models import Answer
 from app.validation import FieldValidation
 
 validate = FieldValidation()
-question_blueprint = Blueprint("question_blueprint", __name__)
-
-
+answer_blueprint = Blueprint("answer_blueprint", __name__)
 
 
 class PostAnswerToQuestion(MethodView):
@@ -133,10 +131,9 @@ class UpDateAnswer(MethodView):
             return jsonify({"message": exception}), 400
 
 
-
 post_answer_view = PostAnswerToQuestion.as_view("post_answer_view")
 update_answer_view = UpDateAnswer.as_view("update_answer_view")
 
-question_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers", view_func=post_answer_view, methods=["POST"])
-question_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers/<ans_id>", view_func=update_answer_view,
-                                methods=["PUT"])
+answer_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers", view_func=post_answer_view, methods=["POST"])
+answer_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers/<ans_id>", view_func=update_answer_view,
+                              methods=["PUT"])
