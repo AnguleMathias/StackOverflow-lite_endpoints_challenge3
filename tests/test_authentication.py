@@ -80,22 +80,6 @@ class TestAuth(BaseTestCase):
         self.assertEqual(reply["message"], "Username already exists")
         self.assertEqual(response.status_code, 409)
 
-    def test_email_exists(self):
-        """ Test for email exist """
-        response = self.app.post("/api/v1/auth/register",
-                                 content_type='application/json',
-                                 data=json.dumps(
-                                     dict(username="angule", email="angule@gmail.com", password="mathias"), )
-                                 )
-        response = self.app.post("/api/v1/auth/register",
-                                 content_type='application/json',
-                                 data=json.dumps(
-                                     dict(username="angulem", email="angule@gmail.com", password="mathias"), )
-                                 )
-        reply = json.loads(response.data)
-        self.assertEqual(reply["message"], "Email already exists")
-        self.assertEqual(response.status_code, 409)
-
     def test_registration_with_no_keys(self):
         """ test_registration_with-no_keys """
         response = self.app.post("/api/v1/auth/register",
