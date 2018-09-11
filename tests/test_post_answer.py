@@ -152,7 +152,6 @@ class TestPostAnswer(BaseTestCase):
                                   headers=dict(Authorization='Bearer ' + reply3[1]['token']),
                                   data=json.dumps(dict(answer="What is your question?"), )
                                   )
-        print response3.data
         response4 = self.app.put("/api/v1/questions/1/answers/2",
                                  content_type='application/json',
                                  headers=dict(Authorization='Bearer ' + reply3[1]['token']),
