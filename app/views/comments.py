@@ -5,7 +5,7 @@ from flask.views import MethodView
 from flask_jwt_extended import get_jwt_identity, jwt_required
 
 from app.db.dbFunctions import get_user_by_username, get_answer_by_id, is_comment_exist, \
-    post_new_comment, get_question_by_id, get_all_comments_to_answers
+    post_new_comment, get_question_by_id
 from app.models import Comment
 from app.validation import FieldValidation
 
