@@ -170,11 +170,11 @@ def post_new_answer(answer, ans_owner, qstn_id, vote, status, date):
     cursor.execute(query)
 
 
-def post_new_comment(comment, comment_owner, ans_id, date):
+def post_new_comment(comment, comment_owner, qstn_id, ans_id, date):
     # post a new answer
     query = (
-        """INSERT INTO comments (comment, comment_owner, ans_id, date) 
-        VALUES ('{}', '{}', '{}', '{}')""".format(comment, comment_owner, ans_id, date))
+        """INSERT INTO comments (comment, comment_owner, qstn_id, ans_id, date) 
+        VALUES ('{}', '{}', '{}', '{}', '{}')""".format(comment, comment_owner, qstn_id, ans_id, date))
     cursor.execute(query)
 
 

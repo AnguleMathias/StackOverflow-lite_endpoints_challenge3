@@ -35,6 +35,55 @@ class TestPostComment(BaseTestCase):
         self.assertEqual(reply3.get("message"), "a 'key' is missing in your answer body")
         self.assertEqual(response4.status_code, 400)
 
+    def test_posting_comment(self):
+        response1 = self.app.post("/api/v1/auth/register", content_type='application/json', data=json.dumps(
+            dict(username="angule", email="angule@gmail.com", password="mathias"), )
+                                  )
+        response = self.app.post("/api/v1/auth/login", content_type='application/json', data=json.dumps(
+            dict(username="angule", password="mathias"))
+                                 )
+        reply2 = json.loads(response.data.decode())
+
+        response2 = self.app.post("/api/v1/questions", content_type='application/json',
+                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  data=json.dumps(dict(title="What", question="What is your question?"), )
+                                  )
+
+        response3 = self.app.post("/api/v1/questions/1/answers", content_type='application/json',
+                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  data=json.dumps(dict(answer="What is your question?"), )
+                                  )
+        response4 = self.app.post("/api/v1/questions/1/answers/1/comments", content_type='application/json',
+                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  data=json.dumps(dict(comment="What is your question?"), )
+                                  )
+        self.assertEqual(response4.status_code, 201)
+
+    def test_posting_comment_wrong_id(self):
+        response1 = self.app.post("/api/v1/auth/register", content_type='application/json', data=json.dumps(
+            dict(username="angule", email="angule@gmail.com", password="mathias"), )
+                                  )
+        response = self.app.post("/api/v1/auth/login", content_type='application/json', data=json.dumps(
+            dict(username="angule", password="mathias"))
+                                 )
+        reply2 = json.loads(response.data.decode())
+
+        response2 = self.app.post("/api/v1/questions", content_type='application/json',
+                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  data=json.dumps(dict(title="What", question="What is your question?"), )
+                                  )
+
+        response3 = self.app.post("/api/v1/questions/1/answers", content_type='application/json',
+                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  data=json.dumps(dict(answer="What is your question?"), )
+                                  )
+        response4 = self.app.post("/api/v1/questions/1/answers/2/comments", content_type='application/json',
+                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  data=json.dumps(dict(comment="What is your question?"), )
+                                  )
+        self.assertEqual(response4.status_code, 404)
+
+
     def test_post_short_comment(self):
         response1 = self.app.post("/api/v1/auth/register",
                                   content_type='application/json',
@@ -56,7 +105,7 @@ class TestPostComment(BaseTestCase):
         response3 = self.app.post("/api/v1/questions/1/answers",
                                   content_type='application/json',
                                   headers=dict(Authorization='Bearer ' + reply2[1]['token']),
-                                  data=json.dumps(dict(answer="W?"), )
+                                  data=json.dumps(dict(answer="Whath what whatt"), )
                                   )
         response4 = self.app.post("/api/v1/questions/1/answers/1/comments", content_type='application/json',
                                   headers=dict(Authorization='Bearer ' + reply2[1]['token']),

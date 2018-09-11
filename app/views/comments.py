@@ -36,7 +36,7 @@ class PostCommentToAnswer(MethodView):
                     return comment_validation2
                 comment_validation = validate.validate_characters(comment)
                 if not comment_validation:
-                    return jsonify({"message": "wrong answer format entered, Please try again"}), 400
+                    return jsonify({"message": "wrong comment format entered, Please try again"}), 400
                 does_qstn_exist = get_question_by_id(qstn_id=qstn_id)
                 if not does_qstn_exist:
                     return jsonify({"message": " No such question exists"}), 404
@@ -49,7 +49,7 @@ class PostCommentToAnswer(MethodView):
                                                "with another one "
                                     }), 409
 
-                post_new_comment(comment=comment,
+                post_new_comment(comment=comment, qstn_id=qstn_id,
                                  comment_owner=comment_owner, ans_id=ans_id, date=date)
                 new_comment = Comment(comment=comment, qstn_id=qstn_id,
                                       comment_owner=comment_owner, ans_id=ans_id, date=date)
