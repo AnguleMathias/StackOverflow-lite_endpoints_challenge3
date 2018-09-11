@@ -36,7 +36,6 @@ Method | Endpoint | Functionality
 --- | --- | ---
 POST | `/api/v1/questions` | Add a question
 GET | `/api/v1/questions` | Lists all questions
-GET | `/api/v1/questions/?q={'search_string'}` | Search a questions
 GET | `/api/v1/questions/<question_id>` | Retrieve a question
 PUT | `/api/v1/questions/>question_id>` | Edit a question of a logged in user
 DELETE | `/api/v1/questions/<question_id>` | Delete a question of a logged in user
