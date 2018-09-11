@@ -11,6 +11,7 @@ auth_blueprint = Blueprint("auth_blueprint", __name__)
 
 bcrypt = Bcrypt()
 
+
 class RegisterUser(MethodView):
     def post(self):
         reg_info = request.get_json()
