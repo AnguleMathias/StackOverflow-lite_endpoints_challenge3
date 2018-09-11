@@ -124,7 +124,7 @@ class GetAnswers(MethodView):
             all_answers = get_all_answers_to_question(qstn_id=qstn_id)
             if all_answers:
                 return jsonify({"Answers": all_answers}), 200
-            return jsonify({"message": "Question does not exist"}), 404
+            return jsonify({"message": "Answer does not exist"}), 404
 
 
 class DeleteAnswer(MethodView):
