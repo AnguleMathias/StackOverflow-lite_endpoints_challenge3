@@ -117,10 +117,21 @@ class GetAnswer(MethodView):
             return jsonify({"message": "Check your url and try again"}), 400
 
 
+class GetAnswers(MethodView):
+    @jwt_required
+    def get(self, qstn_id):
+            all_answers = get_all_answers_to_question(qstn_id=qstn_id)
+            if all_answers:
+                return jsonify({"Answers": all_answers}), 200
+            return jsonify({"message": "Question does not exist"}), 404
+
+
+get_answers_view = GetAnswers.as_view("get_answers_view")
 post_answer_view = PostAnswerToQuestion.as_view("post_answer_view")
 update_answer_view = UpDateAnswer.as_view("update_answer_view")
 get_answer_view = GetAnswer.as_view("get_answer_view")
 
+answer_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers", view_func=get_answers_view, methods=["GET"])
 answer_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers", view_func=post_answer_view, methods=["POST"])
 answer_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers/<ans_id>", view_func=get_answer_view,
                               methods=["GET"])
