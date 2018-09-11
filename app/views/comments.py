@@ -60,19 +60,7 @@ class PostCommentToAnswer(MethodView):
             return jsonify({"message": exception}), 400
 
 
-class GetComments(MethodView):
-    @jwt_required
-    def get(self, ans_id, qstn_id):
-        all_comments = get_all_comments_to_answers(ans_id=ans_id, qstn_id=qstn_id)
-        if all_comments:
-            return jsonify({"Answers": all_comments}), 200
-        return jsonify({"message": "Comments do not exist"}), 404
-
-
-get_comments_view = GetComments.as_view("get_comments_view")
 post_comment_view = PostCommentToAnswer.as_view("post_comment_view")
 
-comment_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers/<ans_id>/comments", view_func=get_comments_view,
-                               methods=["GET"])
 comment_blueprint.add_url_rule("/api/v1/questions/<qstn_id>/answers/<ans_id>/comments", view_func=post_comment_view,
                                methods=["POST"])
