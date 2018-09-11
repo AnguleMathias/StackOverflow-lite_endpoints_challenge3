@@ -77,6 +77,14 @@ def get_all_answers_to_question(qstn_id):
     return answers
 
 
+def get_all_comments_to_answers(ans_id):
+    # Query to fetch all answers to a question
+    query = ("""SELECT * from comments where ans_id = '{}'""".format(ans_id))
+    cursor.execute(query)
+    comments = cursor.fetchall()
+    return comments
+
+
 def delete_question(qstn_id, user_name):
     # Query to delete a specific question
     try:
