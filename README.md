@@ -10,17 +10,18 @@ StackOverflow-lite is a platform where people can ask questions and provide answ
 ## Features
 
 * Users can: 
-    1. Create an account and log in.
+    1. Create an account and log in
     2. Can view questions
-    3. Post questions.
+    3. Post questions
     4. Delete the questions they post
-    5. Post answers
-    6. Accept an answer out of all the answers to his/her queston as they preferred answer
-    7. Upvote or downvote an answer.
-    8. Comment on an answer.
-    9. Fetch all questions he/she has ever asked on the platform
-   10. Search for questions on the platform
-    
+    5. Post answers to questions
+    6. View answers to questions
+    7. Update answers to questions
+    8. Delete answers to questions
+    9. Accept an answer out of all the answers to his/her question as they preferred answer
+    10. Comment on an answer
+    11. Fetch all questions he/she has ever asked on the platform
+
 ## Endpoints
 
 #### Users Endpoints
