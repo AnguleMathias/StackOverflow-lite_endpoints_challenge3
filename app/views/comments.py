@@ -54,7 +54,7 @@ class PostCommentToAnswer(MethodView):
                 new_comment = Comment(comment=comment, qstn_id=qstn_id,
                                       comment_owner=comment_owner, ans_id=ans_id, date=date)
 
-                return jsonify({"New Comment Posted": new_comment.__dict__}), 201
+                return jsonify({"Comment added successfully": new_comment.__dict__}), 201
             return jsonify({"message": "a 'key' is missing in your answer body"}), 400
         except Exception as exception:
             return jsonify({"message": exception}), 400
