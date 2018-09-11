@@ -5,7 +5,7 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from app.validation import FieldValidation
 from app.models import Question
 from app.db.dbFunctions import post_new_question, is_question_exist, get_user_by_username, get_all_questions, \
-    get_single_question, get_all_answers_to_question, delete_question
+    get_single_question, get_all_answers_to_question, delete_question, get_all_user_questions
 
 validate = FieldValidation()
 question_blueprint = Blueprint("question_blueprint", __name__)
@@ -99,12 +99,29 @@ class DeleteQuestion(MethodView):
             return jsonify({"message": "Check your url and try again"}), 400
 
 
+class FetchAllUserQuestions(MethodView):
+    """class to fetch all the questions a user ever asked"""
+
+    @jwt_required
+    def get(self):
+        loggedin_user = get_jwt_identity()
+        user = get_user_by_username(user_name=loggedin_user["username"], password=loggedin_user["password"])
+        qstn_owner = user["username"]
+
+        user_questions = get_all_user_questions(user_name=qstn_owner)
+        if user_questions:
+            return jsonify({"All Questions": user_questions}), 200
+        return jsonify({"message": "user has no questions"}), 404
+
+
 post_question_view = PostQuestion.as_view("post_question_view")
 fetch_questions_view = FetchAllQuestions.as_view("fetch_questions_view")
 fetch_one_question_view = FetchSingleQuestion.as_view("fetch_one_question_view")
 delete_one_question_view = DeleteQuestion.as_view("delete_one_question_view")
+get_user_questions_view = FetchAllUserQuestions.as_view("get_user_questions_view")
 
 question_blueprint.add_url_rule("/api/v1/questions", view_func=post_question_view, methods=["POST"])
 question_blueprint.add_url_rule("/api/v1/questions", view_func=fetch_questions_view, methods=["GET"])
 question_blueprint.add_url_rule("/api/v1/questions/<qstn_id>", view_func=fetch_one_question_view, methods=["GET"])
 question_blueprint.add_url_rule("/api/v1/questions/<qstn_id>", view_func=delete_one_question_view, methods=["DELETE"])
+question_blueprint.add_url_rule("/api/v1/questions/user_questions", view_func=get_user_questions_view, methods=["GET"])
