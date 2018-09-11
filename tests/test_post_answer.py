@@ -1,5 +1,5 @@
-from tests.base_test import BaseTestCase
 from flask import json
+from tests.base_test import BaseTestCase
 
 
 class TestPostAnswer(BaseTestCase):
