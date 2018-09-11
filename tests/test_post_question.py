@@ -98,3 +98,48 @@ class TestPostQuestion(BaseTestCase):
         reply = json.loads(response2.data)
         self.assertEqual(reply.get("message"), "No question title was given")
         self.assertEqual(response2.status_code, 400)
+
+    def test_post_with_short_title(self):
+        response1 = self.app.post("/api/v1/auth/register",
+                                  content_type='application/json',
+                                  data=json.dumps(
+                                      dict(username="angule", email="angule@gmail.com", password="mathias"), )
+                                  )
+        response = self.app.post("/api/v1/auth/login",
+                                 content_type='application/json',
+                                 data=json.dumps(dict(username="angule", password="mathias"))
+                                 )
+        reply2 = json.loads(response.data.decode())
+
+        response2 = self.app.post("/api/v1/questions",
+                                  content_type='application/json',
+                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  data=json.dumps(dict(title="We", question="What is your question?"), )
+                                  )
+
+        reply = json.loads(response2.data)
+        self.assertEqual(reply.get("message"), "Title has to be at least 4 characters long")
+        self.assertEqual(response2.status_code, 400)
+
+    def test_post_with_short_body(self):
+        response1 = self.app.post("/api/v1/auth/register",
+                                  content_type='application/json',
+                                  data=json.dumps(
+                                      dict(username="angule", email="angule@gmail.com", password="mathias"), )
+                                  )
+        response = self.app.post("/api/v1/auth/login",
+                                 content_type='application/json',
+                                 data=json.dumps(dict(username="angule", password="mathias"))
+                                 )
+        reply2 = json.loads(response.data.decode())
+
+        response2 = self.app.post("/api/v1/questions",
+                                  content_type='application/json',
+                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  data=json.dumps(dict(title="What", question="W?"), )
+                                  )
+
+        reply = json.loads(response2.data)
+        self.assertEqual(reply.get("message"), "Question has to be at least 10 characters long")
+        self.assertEqual(response2.status_code, 400)
+
