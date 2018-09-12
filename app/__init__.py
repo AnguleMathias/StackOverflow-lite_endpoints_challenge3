@@ -14,7 +14,8 @@ app.register_blueprint(question_blueprint)
 app.register_blueprint(answer_blueprint)
 app.register_blueprint(comment_blueprint)
 app.config['ENV'] = os.getenv('ENV')
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+
+app.config['JWT_SECRET_KEY'] = 'qwertyuiop'
 from flask_jwt_extended import JWTManager
 jwt = JWTManager(app)
 bcrypt = Bcrypt(app)
