@@ -1,16 +1,18 @@
-import os
-
 class BaseConfig(object):
     """Common configurations"""
     TESTING = False
     DEBUG = False
     SECRET_KEY = "qwertyuiop"
-    DATABASE_URL = os.getenv('DATABASE_URL')
+
+
+class ProductionConfig(BaseConfig):
+    DATABASE_URL = 'postgres://krqfsehkasavsb:acb637aceb4536a2b1eb13d145cb75efb6b421764ec3112217a6004d2ce0e4ed@ec2-54' \
+                   '-83-4-76.compute-1.amazonaws.com:5432/d3mh07tcck40nj '
+    DEBUG = True
 
 
 class DevelopmentConfig(BaseConfig):
-    """Development configurations"""
-    DATABASE_URL = os.getenv('DATABASE_URL')
+    DATABASE_URL = 'postgresql://postgres:postgres@localhost:5432/stackoverflow_tests'
     DEBUG = True
 
 
@@ -19,11 +21,6 @@ class TestingConfig(BaseConfig):
     DATABASE_URL = 'postgresql://postgres:postgres@localhost:5432/stackoverflow_tests'
     TESTING = True
     DEBUG = True
-
-
-class ProductionConfig(BaseConfig):
-    """Production configurations"""
-    DEBUG = False
 
 
 app_config = {
