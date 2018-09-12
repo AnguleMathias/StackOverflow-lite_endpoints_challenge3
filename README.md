@@ -61,10 +61,7 @@ Method | Endpoint | Functionality
 POST | `/api/v1/questions/<qstn_id>/answers/<ans_id>/comments` | Add a comment
 
 ## Deployment
-Api [host](https://stack-overflow-lite-angule.herokuapp.com/api/v1/questions)
 
-## Documentation
-API [documentation](https://stackoverflowliteapiv11.docs.apiary.io)
 
 ## Tools Used
 
@@ -103,13 +100,6 @@ API [documentation](https://stackoverflowliteapiv11.docs.apiary.io)
 * Install the app dependencies.(for Windows, Linux and MacOS)
 
             `pip install -r requirements.txt`
-            `pip install python-dotenv`
-            
-* Create .env file on project root folder and add:
-
-            `export SECRET_KEY=qwertyuiop`
-            `export ENV=development`
-          
 
 * Run the app(for Windows, Linux and MacOS)
 
