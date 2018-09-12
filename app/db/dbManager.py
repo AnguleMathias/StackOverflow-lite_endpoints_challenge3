@@ -5,9 +5,10 @@ from app.config import app_config
 
 class DBConnection:
     def __init__(self):
-        if app_config["development"]:
-            self.con = psycopg2.connect(database="stackoverflow", user="postgres", password="mathias",
-                                        host="localhost", port="5432")
+        if app_config["production"]:
+            self.con = psycopg2.connect(database="d3mh07tcck40nj", user="krqfsehkasavsb",
+                                        password="acb637aceb4536a2b1eb13d145cb75efb6b421764ec3112217a6004d2ce0e4ed",
+                                        host="ec2-54-83-4-76.compute-1.amazonaws.com", port="5432")
             self.con.autocommit = True
             self.cursor = self.con.cursor()
             self.dict_cursor = self.con.cursor(cursor_factory=extra.RealDictCursor)
