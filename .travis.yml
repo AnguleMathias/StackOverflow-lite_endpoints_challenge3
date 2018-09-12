@@ -1,8 +1,7 @@
 language: python
 
 env:
-  - ENV=testing
-  - SECRET_KEY=ello1233t34erfcx
+  - SECRET_KEY=hello1233t34erfcx
 
 python:
   - "3.6.5"
