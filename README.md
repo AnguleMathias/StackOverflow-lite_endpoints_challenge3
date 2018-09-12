@@ -24,14 +24,14 @@ StackOverflow-lite is a platform where people can ask questions and provide answ
 
 ## Endpoints
 
-#### Users Endpoints
+#### User Endpoints
 
 Method | Endpoint | Functionality
 --- | --- | ---
 POST | `/api/v1/auth/register` | Add a user
 POST | `/api/v1/auth/login` | Login a user
 
-#### Questions Endpoints
+#### Question Endpoints
 
 Method | Endpoint | Functionality
 --- | --- | ---
@@ -42,7 +42,7 @@ GET | `/api/v1/questions/user_questions` | Retrieve single user questions
 PUT | `/api/v1/questions/>question_id>` | Edit a question of a logged in user
 DELETE | `/api/v1/questions/<question_id>` | Delete a question of a logged in user
 
-#### Answers Endpoints
+#### Answer Endpoints
 
 Method | Endpoint | Functionality
 --- | --- | ---
@@ -52,7 +52,6 @@ GET | `/api/v1/questions/<question_id>/answers` | View all answers to a question
 PUT | `/api/v1/questions/<question_id>/answers/<answer_id>` | Update an answer 
 DELETE | `/api/v1/questions/<question_id>/answers/<answer_id>` | Delete an answer
                              
-
 
 #### Comment Endpoints
 
@@ -73,7 +72,6 @@ Api [documentation](https://stackoverflowliteapiv11.docs.apiary.io)
 * [Flask](http://flask.pocoo.org/) - Framework for Python
 * [Virtual environment](https://virtualenv.pypa.io/en/stable/) - Tool used to create isolated python environments
 * [pip](https://pip.pypa.io/en/stable/) - Package installer for Python
-
 
 ## Getting Started
 
