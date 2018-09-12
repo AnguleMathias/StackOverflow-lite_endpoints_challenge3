@@ -1,8 +1,11 @@
+import os
+
+
 class BaseConfig(object):
     """Common configurations"""
     TESTING = False
     DEBUG = False
-    SECRET_KEY = "qwertyuiop"
+    SECRET_KEY = os.getenv('SECRET_KEY') or "qwertyuiop"
 
 
 class ProductionConfig(BaseConfig):

@@ -1,5 +1,8 @@
 language: python
 
+env:
+  - ENV=testing
+
 python:
   - "3.6.5"
 
