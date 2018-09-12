@@ -40,7 +40,7 @@ class FieldValidation:
 
     def validate_email(self, email):
         if len(email) > 7:
-            if re.match("[^@]+@[^@]+[^@]+", email) is not None:
+            if re.match(r'(^[a-zA-Z0-9_.]+@[a-zA-Z0-9]+\.[a-z.]+$)', email) is not None:
                 return True
             return False
         return False
