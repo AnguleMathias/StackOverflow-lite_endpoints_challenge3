@@ -1,13 +1,16 @@
+import os
+
 class BaseConfig(object):
     """Common configurations"""
     TESTING = False
     DEBUG = False
     SECRET_KEY = "qwertyuiop"
+    DATABASE_URL = os.getenv('DATABASE_URL')
 
 
 class DevelopmentConfig(BaseConfig):
     """Development configurations"""
-    DATABASE_URL = 'postgresql://postgres:postgres@localhost:5432/stackoverflow'
+    DATABASE_URL = os.getenv('DATABASE_URL')
     DEBUG = True
 
 
