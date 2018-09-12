@@ -1,7 +1,7 @@
 language: python
 
 env:
-  - SECRET_KEY=qwertyuiop
+  - JWT_SECRET_KEY=qwertyuiop
 
 python:
   - "3.6.5"
