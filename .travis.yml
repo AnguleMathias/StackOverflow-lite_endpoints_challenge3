@@ -1,7 +1,7 @@
 language: python
 
 env:
-  - SECRET_KEY=hello1233t34erfcx
+  - SECRET_KEY=qwertyuiop
 
 python:
   - "3.6.5"
