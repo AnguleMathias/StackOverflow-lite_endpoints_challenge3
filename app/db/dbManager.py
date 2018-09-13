@@ -1,3 +1,4 @@
+import os
 import psycopg2
 import psycopg2.extras as extra
 from app.config import app_config
@@ -5,25 +6,24 @@ from app.config import app_config
 
 class DBConnection:
     def __init__(self):
-        if app_config["production"]:
-            self.con = psycopg2.connect(database="d3mh07tcck40nj", user="krqfsehkasavsb",
-                                        password="acb637aceb4536a2b1eb13d145cb75efb6b421764ec3112217a6004d2ce0e4ed",
-                                        host="ec2-54-83-4-76.compute-1.amazonaws.com", port="5432")
-            self.con.autocommit = True
-            self.cursor = self.con.cursor()
-            self.dict_cursor = self.con.cursor(cursor_factory=extra.RealDictCursor)
-        elif app_config["development"]:
-            self.con = psycopg2.connect(database="stackoverflow", user="postgres", password="mathias",
-                                        host="localhost", port="5432")
-            self.con.autocommit = True
-            self.cursor = self.con.cursor()
-            self.dict_cursor = self.con.cursor(cursor_factory=extra.RealDictCursor)
-        elif app_config["testing"]:
-            self.con = psycopg2.connect(database="stackoverflow_tests", user="postgres", password="mathias",
-                                        host="localhost", port="5432")
-            self.con.autocommit = True
-            self.cursor = self.con.cursor()
-            self.dict_cursor = self.con.cursor(cursor_factory=extra.RealDictCursor)
+        config = os.getenv('APP_SETTINGS')
+        host = os.getenv('DB_HOST')
+        user = os.getenv('DB_USERNAME')
+        password = os.getenv('DB_PASSWORD')
+
+        if config == 'testing':
+            database_name = os.getenv('TEST_DB')
+        else:
+            database_name = os.getenv('DB_NAME')
+        self.con = psycopg2.connect(
+            database=database_name,
+            user=user,
+            password=password,
+            host=host
+        )
+        self.con.autocommit = True
+        self.cursor = self.con.cursor()
+        self.dict_cursor = self.con.cursor(cursor_factory=extra.RealDictCursor)
 
     def create_tables(self):
         queries = (
