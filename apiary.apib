@@ -77,8 +77,8 @@ StackOverflow-lite is a platform where people can ask questions and provide answ
     
     + Headers
 
-            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MGFiN2NmYi1jNDRmLTQ5MmQtODNhMy02YWRkNDVjN2JhMTgiLCJleHAiOjE1MzY2ODUyMDksImZyZXNoIjpmYWxzZSwiaWF0IjoxNTM2Njg0MzA5LCJ0eXBlIjoiYWNjZXNzIiwibmJmIjoxNTM2Njg0MzA5LCJpZGVudGl0eSI6eyJ1c2VybmFtZSI6ImFuZ3VsZSIsInBhc3N3b3JkIjoibWF0aGlhcyIsInVzZXJfaWQiOjEsImVtYWlsIjoibWF0aGlhc0BnbWFpbC5jb20ifX0.4AQ-1c2Il3QJQ0UyE4p_APIu4UyBB9Uh7igxqmP7dXw
-
+            Authorization: Bearer sdfsefd
+            
     + Body
 
             { 
@@ -115,7 +115,7 @@ This action fetches all the questions in the database.
     
     + Headers
 
-            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MGFiN2NmYi1jNDRmLTQ5MmQtODNhMy02YWRkNDVjN2JhMTgiLCJleHAiOjE1MzY2ODUyMDksImZyZXNoIjpmYWxzZSwiaWF0IjoxNTM2Njg0MzA5LCJ0eXBlIjoiYWNjZXNzIiwibmJmIjoxNTM2Njg0MzA5LCJpZGVudGl0eSI6eyJ1c2VybmFtZSI6ImFuZ3VsZSIsInBhc3N3b3JkIjoibWF0aGlhcyIsInVzZXJfaWQiOjEsImVtYWlsIjoibWF0aGlhc0BnbWFpbC5jb20ifX0.4AQ-1c2Il3QJQ0UyE4p_APIu4UyBB9Uh7igxqmP7dXw
+            Authorization: Bearer igxqmP7dXw
 
 
 + Response 200 (application/json)
@@ -140,18 +140,20 @@ This action fetches all the questions in the database.
         }
         
 
-## Delete question collection [/questions/1]
+## Delete question collection [/questions/{question_id}]
 
 ### User can delete a question [DELETE]
 User can delete a question using this action.
 
++ Parameters
+    + question_id: 1 (required, integer) - ID of the Question
 
 + Request (application/json)
    
     + Headers
 
-            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MGFiN2NmYi1jNDRmLTQ5MmQtODNhMy02YWRkNDVjN2JhMTgiLCJleHAiOjE1MzY2ODUyMDksImZyZXNoIjpmYWxzZSwiaWF0IjoxNTM2Njg0MzA5LCJ0eXBlIjoiYWNjZXNzIiwibmJmIjoxNTM2Njg0MzA5LCJpZGVudGl0eSI6eyJ1c2VybmFtZSI6ImFuZ3VsZSIsInBhc3N3b3JkIjoibWF0aGlhcyIsInVzZXJfaWQiOjEsImVtYWlsIjoibWF0aGlhc0BnbWFpbC5jb20ifX0.4AQ-1c2Il3QJQ0UyE4p_APIu4UyBB9Uh7igxqmP7dXw
-    
+            Authorization: Bearer sdfgfde
+            
 
 + Response 200 (application/json)
 
@@ -173,8 +175,9 @@ Fetches all questions belonging to the user logged in.
 
     + Headers
 
-            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MGFiN2NmYi1jNDRmLTQ5MmQtODNhMy02YWRkNDVjN2JhMTgiLCJleHAiOjE1MzY2ODUyMDksImZyZXNoIjpmYWxzZSwiaWF0IjoxNTM2Njg0MzA5LCJ0eXBlIjoiYWNjZXNzIiwibmJmIjoxNTM2Njg0MzA5LCJpZGVudGl0eSI6eyJ1c2VybmFtZSI6ImFuZ3VsZSIsInBhc3N3b3JkIjoibWF0aGlhcyIsInVzZXJfaWQiOjEsImVtYWlsIjoibWF0aGlhc0BnbWFpbC5jb20ifX0.4AQ-1c2Il3QJQ0UyE4p_APIu4UyBB9Uh7igxqmP7dXw
-    
+            Authorization: Bearer sdfsefd
+            
+            
 + Response 200 (application/json)
     
         {
@@ -204,8 +207,8 @@ User can add an answer to the target question
     
     + Headers
 
-            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MGFiN2NmYi1jNDRmLTQ5MmQtODNhMy02YWRkNDVjN2JhMTgiLCJleHAiOjE1MzY2ODUyMDksImZyZXNoIjpmYWxzZSwiaWF0IjoxNTM2Njg0MzA5LCJ0eXBlIjoiYWNjZXNzIiwibmJmIjoxNTM2Njg0MzA5LCJpZGVudGl0eSI6eyJ1c2VybmFtZSI6ImFuZ3VsZSIsInBhc3N3b3JkIjoibWF0aGlhcyIsInVzZXJfaWQiOjEsImVtYWlsIjoibWF0aGlhc0BnbWFpbC5jb20ifX0.4AQ-1c2Il3QJQ0UyE4p_APIu4UyBB9Uh7igxqmP7dXw
-    
+            Authorization: Bearer fgdgffgf
+            
     + Body
     
             {                
@@ -251,8 +254,8 @@ User can add an answer to the target question
     
     + Headers
 
-            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MGFiN2NmYi1jNDRmLTQ5MmQtODNhMy02YWRkNDVjN2JhMTgiLCJleHAiOjE1MzY2ODUyMDksImZyZXNoIjpmYWxzZSwiaWF0IjoxNTM2Njg0MzA5LCJ0eXBlIjoiYWNjZXNzIiwibmJmIjoxNTM2Njg0MzA5LCJpZGVudGl0eSI6eyJ1c2VybmFtZSI6ImFuZ3VsZSIsInBhc3N3b3JkIjoibWF0aGlhcyIsInVzZXJfaWQiOjEsImVtYWlsIjoibWF0aGlhc0BnbWFpbC5jb20ifX0.4AQ-1c2Il3QJQ0UyE4p_APIu4UyBB9Uh7igxqmP7dXw
-    
+            Authorization: Bearer dfgdfgdf
+            
 
 + Response 200 (application/json)
 
@@ -280,14 +283,27 @@ User can add an answer to the target question
             }
 
 
-## Answers: Fetch single [/questions/answers/{answer_id}]
+## Answers: Fetch single [/questions/{question_id}/answers/{answer_id}]
 
 ### User can retrieve an answer [GET]
 
 + Parameters
+   
     + answer_id: 1 (required, integer) - ID of answer 
+   
+    + question_id: 1 (required, integer) - ID of question
+    
++ Request (application/json)
 
+    + Headers
+
+            Authorization: Bearer wtted
+            
 + Response 200 (application/json)
+
+    
+            
+    + Body
 
             {
                 "Answer Details": {
@@ -325,9 +341,19 @@ User can add an answer to the target question
     
 + Request (applicatino/json)
 
+    + Headers
+
+
+            Authorization: Bearer fgdgffgf
+    
+            
+    + Body
+    
+
         { 
             "answer":"i dont have a question, i am fine"
         }
+
 
 + Response 200 (application/json)
 
@@ -346,6 +372,7 @@ User can add an answer to the target question
 
 + Response 400 (application/json)
 
+    
         {
             "message": "Please provide correct answer and question id",
             "status": "fail"
@@ -355,9 +382,18 @@ User can add an answer to the target question
 ### User can delete an answer [DELETE]
 
 + Parameters
-    + answer_id: 1 (required, integer) - ID of the answer
-    + question_id: 1 (required, integer) - ID of the question
 
+    + answer_id: 1 (required, integer) - ID of the answer
+
+    + question_id: 1 (required, integer) - ID of the question
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer fgdgffgf
+    
+    
 + Response 200 (application/json)
 
         {
@@ -377,11 +413,21 @@ User can add an answer to the target question
 ### User can comment on an answer [POST]
 
 + Parameters
+
     + answer_id: 1 (required, integer) - ID of the answer
+
     + question_id: 1 (required, integer) - ID of the question
 
 + Request (application/json)
 
+    + Headers
+
+
+            Authorization: Bearer fgdgffgf
+    
+            
+    + Body
+    
         {
             "comment": "comment goes here"
         }
