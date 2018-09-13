@@ -1,3 +1,4 @@
+"""Configurations"""
 import os
 
 
@@ -9,13 +10,12 @@ class BaseConfig(object):
 
 
 class DevelopmentConfig(BaseConfig):
-    DATABASE_URL = 'postgresql://postgres:postgres@localhost:5432/stackoverflow_tests'
+    """Development configurations"""
     DEBUG = True
 
 
 class TestingConfig(BaseConfig):
     """Configurations for Testing, with a separate test database."""
-    DATABASE_URL = 'postgresql://postgres:postgres@localhost:5432/stackoverflow_tests'
     TESTING = True
     DEBUG = True
 

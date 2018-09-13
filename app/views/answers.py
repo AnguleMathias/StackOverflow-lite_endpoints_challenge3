@@ -1,3 +1,4 @@
+"""answers view"""
 import datetime
 
 from flask import jsonify, request, Blueprint
@@ -16,9 +17,9 @@ answer_blueprint = Blueprint("answer_blueprint", __name__)
 
 class PostAnswerToQuestion(MethodView):
     """class to post an answer to a question"""
-
     @jwt_required
     def post(self, qstn_id):
+        """method to post an answer to a question"""
         try:
             data = request.get_json()
             if "answer" in data.keys():
@@ -58,8 +59,10 @@ class PostAnswerToQuestion(MethodView):
 
 
 class UpDateAnswer(MethodView):
+    """class to update an answer to a question"""
     @jwt_required
     def put(self, qstn_id, ans_id):
+        """method to update an answer to a question"""
         try:
             qstn_id_validation = validate.validate_entered_id(qstn_id)
             if qstn_id_validation:
@@ -104,8 +107,10 @@ class UpDateAnswer(MethodView):
 
 
 class GetAnswer(MethodView):
+    """class to get an answer to a question"""
     @jwt_required
     def get(self, ans_id, qstn_id):
+        """method to get an answer to a question"""
         try:
             id_validation = validate.validate_entered_id(ans_id)
             if id_validation:
@@ -119,17 +124,21 @@ class GetAnswer(MethodView):
 
 
 class GetAnswers(MethodView):
+    """class to get all answers to a question"""
     @jwt_required
     def get(self, qstn_id):
-            all_answers = get_all_answers_to_question(qstn_id=qstn_id)
-            if all_answers:
-                return jsonify({"Answers": all_answers}), 200
-            return jsonify({"message": "Answer does not exist"}), 404
+        """method to get all answers to a question"""
+        all_answers = get_all_answers_to_question(qstn_id=qstn_id)
+        if all_answers:
+            return jsonify({"Answers": all_answers}), 200
+        return jsonify({"message": "Answer does not exist"}), 404
 
 
 class DeleteAnswer(MethodView):
+    """class to delete answer to a question"""
     @jwt_required
     def delete(self, ans_id, qstn_id):
+        """method to delete answer to a question"""
         try:
             id_validation = validate.validate_entered_id(ans_id)
             if id_validation:

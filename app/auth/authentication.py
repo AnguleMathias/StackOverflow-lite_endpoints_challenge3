@@ -1,3 +1,4 @@
+"""Register and Login"""
 from flask import request, jsonify, Blueprint
 from flask.views import MethodView
 from flask_bcrypt import Bcrypt
@@ -13,7 +14,9 @@ bcrypt = Bcrypt()
 
 
 class RegisterUser(MethodView):
+    """Register user class"""
     def post(self):
+        """register user function"""
         reg_info = request.get_json()
         search_keys = ("username", "email", "password")
         if all(key in reg_info.keys() for key in search_keys):
@@ -43,7 +46,9 @@ class RegisterUser(MethodView):
 
 
 class Login(MethodView):
+    """Login user class"""
     def post(self):
+        """login user function"""
         login_info = request.get_json()
         search_keys = ("username", "password")
         if all(key in login_info.keys() for key in search_keys):

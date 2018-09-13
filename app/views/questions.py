@@ -1,3 +1,4 @@
+"""questions view"""
 import datetime
 
 from flask import jsonify, request, Blueprint
@@ -14,8 +15,10 @@ question_blueprint = Blueprint("question_blueprint", __name__)
 
 
 class PostQuestion(MethodView):
+    """class to add questions"""
     @jwt_required
     def post(self):
+        """method to add questions"""
         try:
             data = request.get_json()
             search_keys = ("title", "question")
@@ -42,8 +45,10 @@ class PostQuestion(MethodView):
 
 
 class FetchAllQuestions(MethodView):
+    """class to view all questions"""
     @jwt_required
     def get(self):
+        """method to view all questions"""
         all_questions = get_all_questions()
         if all_questions:
             return jsonify({"All Questions": all_questions}), 200
@@ -51,8 +56,10 @@ class FetchAllQuestions(MethodView):
 
 
 class FetchSingleQuestion(MethodView):
+    """class to view one questions"""
     @jwt_required
     def get(self, qstn_id):
+        """method to view one questions"""
         try:
             id_validation = validate.validate_entered_id(qstn_id)
             if id_validation:
@@ -67,8 +74,10 @@ class FetchSingleQuestion(MethodView):
 
 
 class DeleteQuestion(MethodView):
+    """class to delete all questions"""
     @jwt_required
     def delete(self, qstn_id):
+        """method to delete all questions"""
         try:
             id_validation = validate.validate_entered_id(qstn_id)
             if id_validation:
@@ -84,8 +93,10 @@ class DeleteQuestion(MethodView):
 
 
 class FetchAllUserQuestions(MethodView):
+    """class to view all user questions"""
     @jwt_required
     def get(self):
+        """method to view all user questions"""
         loggedin_user = get_jwt_identity()
         user = get_user_by_username(user_name=loggedin_user["username"], password=loggedin_user["password"])
         qstn_owner = user["username"]

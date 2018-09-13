@@ -1,16 +1,18 @@
+"""handles database"""
 import os
+
 import psycopg2
 import psycopg2.extras as extra
-from app.config import app_config
 
 
 class DBConnection:
+    """database connection class"""
     def __init__(self):
+        """function to initialize db"""
         config = os.getenv('APP_SETTINGS')
         host = os.getenv('DB_HOST')
         user = os.getenv('DB_USERNAME')
         password = os.getenv('DB_PASSWORD')
-
         if config == 'testing':
             database_name = os.getenv('TEST_DB')
         else:
@@ -26,6 +28,7 @@ class DBConnection:
         self.dict_cursor = self.con.cursor(cursor_factory=extra.RealDictCursor)
 
     def create_tables(self):
+        """method to create development environment table"""
         queries = (
             """CREATE TABLE IF NOT EXISTS users (
                 user_id SERIAL PRIMARY KEY, username VARCHAR(50) NOT NULL,
@@ -48,7 +51,7 @@ class DBConnection:
             self.cursor.execute(query)
 
     def create_test_tables(self):
-
+        """method to create testing environment table"""
         queries = (
             """CREATE TABLE IF NOT EXISTS users (
                             user_id SERIAL PRIMARY KEY, username VARCHAR(50) NOT NULL,
@@ -71,6 +74,7 @@ class DBConnection:
             self.cursor.execute(query)
 
     def delete_test_tables(self):
+        """method to delete testing environment table"""
         delete_queries = (
             """
             DROP TABLE IF EXISTS users CASCADE

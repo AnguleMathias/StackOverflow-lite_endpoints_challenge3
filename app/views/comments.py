@@ -1,3 +1,4 @@
+"""comments to answers"""
 import datetime
 
 from flask import jsonify, request, Blueprint
@@ -15,9 +16,9 @@ comment_blueprint = Blueprint("comment_blueprint", __name__)
 
 class PostCommentToAnswer(MethodView):
     """class to post an answer to a question"""
-
     @jwt_required
     def post(self, ans_id, qstn_id):
+        """function to post an answer to a question"""
         try:
             data = request.get_json()
             if "comment" in data.keys():

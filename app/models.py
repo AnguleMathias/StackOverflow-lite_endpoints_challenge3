@@ -1,7 +1,9 @@
+"""models"""
 from flask_bcrypt import Bcrypt
 
 
 class User:
+    """model for user"""
     def __init__(self, username, email, password):
         self.username = username
         self.email = email
@@ -9,6 +11,7 @@ class User:
 
 
 class Question:
+    """model for questions"""
     def __init__(self, title, question, qstn_owner, date):
         self.title = title
         self.question = question
@@ -16,6 +19,7 @@ class Question:
         self.date = date
 
     def to_json(self):
+        """function to jsonify"""
         question = dict(
             title=self.title,
             question=self.question,
@@ -24,12 +28,13 @@ class Question:
         )
         return question
 
-    # method to display class objects as dictionaries
+    """method to display class objects as dictionaries"""
     def __repr__(self):
         return repr(self.__dict__)
 
 
 class Answer:
+    """model for answer"""
     def __init__(self, answer, ans_owner, qstn_id, vote, status, date):
         self.answer = answer
         self.ans_owner = ans_owner
@@ -40,6 +45,7 @@ class Answer:
 
 
 class Comment:
+    """model for comments"""
     def __init__(self, comment, comment_owner, qstn_id, ans_id, date):
         self.comment = comment
         self.comment_owner = comment_owner
