@@ -39,7 +39,6 @@ POST | `/api/v1/questions` | Add a question
 GET | `/api/v1/questions` | Lists all questions
 GET | `/api/v1/questions/<question_id>` | Retrieve a question
 GET | `/api/v1/questions/user_questions` | Retrieve single user questions
-PUT | `/api/v1/questions/>question_id>` | Edit a question of a logged in user
 DELETE | `/api/v1/questions/<question_id>` | Delete a question of a logged in user
 
 #### Answer Endpoints
