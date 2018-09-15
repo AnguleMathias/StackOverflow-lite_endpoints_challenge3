@@ -8,7 +8,7 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from app.db.dbFunctions import post_new_question, is_question_exist, get_user_by_username, get_all_questions, \
     get_single_question, get_all_answers_to_question, delete_question, get_all_user_questions
 from app.models import Question
-from app.validation import FieldValidation
+from validation import FieldValidation
 
 validate = FieldValidation()
 question_blueprint = Blueprint("question_blueprint", __name__)

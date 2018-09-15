@@ -8,7 +8,7 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from app.db.dbFunctions import get_user_by_username, get_answer_by_id, is_comment_exist, \
     post_new_comment, get_question_by_id
 from app.models import Comment
-from app.validation import FieldValidation
+from validation import FieldValidation
 
 validate = FieldValidation()
 comment_blueprint = Blueprint("comment_blueprint", __name__)

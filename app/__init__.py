@@ -1,7 +1,7 @@
 import os
 from flask import Flask
 from flask_bcrypt import Bcrypt
-
+from flask_cors import CORS
 
 app = Flask(__name__)
 
@@ -19,4 +19,5 @@ app.config['ENV'] = os.getenv('ENV')
 app.config['JWT_SECRET_KEY'] = 'qwertyuiop'
 from flask_jwt_extended import JWTManager
 jwt = JWTManager(app)
+CORS(app)
 bcrypt = Bcrypt(app)

@@ -3,9 +3,9 @@ import re
 from flask import jsonify
 
 
-
 class FieldValidation:
     """Field validation"""
+
     def register_validation(self, user_name, email, password):
         """register validation"""
         if not user_name:

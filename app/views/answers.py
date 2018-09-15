@@ -9,7 +9,7 @@ from app.db.dbFunctions import get_user_by_username, get_single_question, get_qu
     post_new_answer, update_answer, get_answer_details, accept_answer, get_answer_by_id, get_all_answers_to_question, \
     delete_answer
 from app.models import Answer
-from app.validation import FieldValidation
+from validation import FieldValidation
 
 validate = FieldValidation()
 answer_blueprint = Blueprint("answer_blueprint", __name__)
