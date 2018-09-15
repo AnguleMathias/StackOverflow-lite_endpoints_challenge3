@@ -63,9 +63,9 @@ class Login(MethodView):
             user_token = {}
             user = get_user_by_username(user_name, password)
             if user:
-                access_token = create_access_token(identity=user)
+                access_token = create_access_token(identity=user, expires_delta=False)
                 user_token["token"] = access_token
-                return jsonify("Successful login", user_token), 200
+                return jsonify({"message": "Successful login", "access_token": access_token, "username": user_name}), 200
             return jsonify({"message": "user does not exist, register and login again"}), 404
         return jsonify({"message": "a 'key(s)' is missing in login body"}), 400
 

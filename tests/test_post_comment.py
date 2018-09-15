@@ -14,11 +14,11 @@ class TestPostComment(BaseTestCase):
         reply2 = json.loads(response.data.decode())
 
         response2 = self.app.post("/api/v1/questions", content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(title="What", question="What is your question?"), )
                                   )
         response3 = self.app.post("/api/v1/questions/1/answers", content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(answer="What is your question?"), )
                                   )
 
@@ -27,7 +27,7 @@ class TestPostComment(BaseTestCase):
                                  )
         reply2_ = json.loads(response.data.decode())
         response4 = self.app.post("/api/v1/questions/1/answers/1/comments", content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2_[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(comments="What is your question?"), )
                                   )
 
@@ -45,16 +45,16 @@ class TestPostComment(BaseTestCase):
         reply2 = json.loads(response.data.decode())
 
         response2 = self.app.post("/api/v1/questions", content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(title="What", question="What is your question?"), )
                                   )
 
         response3 = self.app.post("/api/v1/questions/1/answers", content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(answer="What is your question?"), )
                                   )
         response4 = self.app.post("/api/v1/questions/1/answers/1/comments", content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(comment="What is your question?"), )
                                   )
         self.assertEqual(response4.status_code, 201)
@@ -69,20 +69,19 @@ class TestPostComment(BaseTestCase):
         reply2 = json.loads(response.data.decode())
 
         response2 = self.app.post("/api/v1/questions", content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(title="What", question="What is your question?"), )
                                   )
 
         response3 = self.app.post("/api/v1/questions/1/answers", content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(answer="What is your question?"), )
                                   )
         response4 = self.app.post("/api/v1/questions/1/answers/2/comments", content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(comment="What is your question?"), )
                                   )
         self.assertEqual(response4.status_code, 404)
-
 
     def test_post_short_comment(self):
         response1 = self.app.post("/api/v1/auth/register",
@@ -98,17 +97,17 @@ class TestPostComment(BaseTestCase):
 
         response2 = self.app.post("/api/v1/questions",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(
                                       dict(title="What", question="What is your question?"), )
                                   )
         response3 = self.app.post("/api/v1/questions/1/answers",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(answer="Whath what whatt"), )
                                   )
         response4 = self.app.post("/api/v1/questions/1/answers/1/comments", content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(comment="Wh"), )
                                   )
         reply3 = json.loads(response4.data)
@@ -129,23 +128,23 @@ class TestPostComment(BaseTestCase):
 
         response2 = self.app.post("/api/v1/questions",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(
                                       dict(title="What", question="What is your question?"), )
                                   )
         response3 = self.app.post("/api/v1/questions/1/answers",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(answer="What is your question?"), )
                                   )
         response4 = self.app.post("/api/v1/questions/2/answers/1/comments",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(comment="What is your question?"), )
                                   )
         response5 = self.app.post("/api/v1/questions/2/answers/1/comments",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(comment="What is your question?"), )
                                   )
         self.assertEqual(response5.status_code, 404)
@@ -164,17 +163,17 @@ class TestPostComment(BaseTestCase):
 
         response2 = self.app.post("/api/v1/questions",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(
                                       dict(title="What", question="What is your question?"), )
                                   )
         response3 = self.app.post("/api/v1/questions/1/answers",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(answer="W?"), )
                                   )
         response4 = self.app.post("/api/v1/questions/1/answers/1/commen", content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(comment="What is this??"), )
                                   )
         self.assertEqual(response4.status_code, 404)

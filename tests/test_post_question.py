@@ -18,7 +18,7 @@ class TestPostQuestion(BaseTestCase):
 
         response2 = self.app.post("/api/v1/questions",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(
                                       dict(title="What", question="What is your question?"), )
                                   )
@@ -40,13 +40,13 @@ class TestPostQuestion(BaseTestCase):
 
         response2 = self.app.post("/api/v1/questions",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(
                                       dict(title="What", question="What is your question?"), )
                                   )
         response2 = self.app.post("/api/v1/questions",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(
                                       dict(title="What", question="What is your question?"), )
                                   )
@@ -69,7 +69,7 @@ class TestPostQuestion(BaseTestCase):
 
         response2 = self.app.post("/api/v1/questions",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(title="What", question=" "), )
                                   )
 
@@ -91,7 +91,7 @@ class TestPostQuestion(BaseTestCase):
 
         response2 = self.app.post("/api/v1/questions",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(title=" ", question="What is your question?"), )
                                   )
 
@@ -113,7 +113,7 @@ class TestPostQuestion(BaseTestCase):
 
         response2 = self.app.post("/api/v1/questions",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(title="We", question="What is your question?"), )
                                   )
 
@@ -135,7 +135,7 @@ class TestPostQuestion(BaseTestCase):
 
         response2 = self.app.post("/api/v1/questions",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(dict(title="What", question="W?"), )
                                   )
 

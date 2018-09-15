@@ -18,7 +18,7 @@ class TestViewQuestion(BaseTestCase):
         reply2 = json.loads(response.data.decode())
 
         response3 = self.app.get("/api/v1/questions", content_type='application/json',
-                                 headers=dict(Authorization='Bearer ' + reply2[1]['token']))
+                                 headers=dict(Authorization='Bearer ' + reply2['access_token']))
         reply = json.loads(response3.data)
         self.assertEqual(reply.get("message"), "No questions posted yet")
         self.assertEqual(response3.status_code, 404)
@@ -37,12 +37,12 @@ class TestViewQuestion(BaseTestCase):
         reply2 = json.loads(response.data.decode())
         response2 = self.app.post("/api/v1/questions",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(
                                       dict(title="What", question="What is your question?"), )
                                   )
         response3 = self.app.get("/api/v1/questions", content_type='application/json',
-                                 headers=dict(Authorization='Bearer ' + reply2[1]['token']))
+                                 headers=dict(Authorization='Bearer ' + reply2['access_token']))
         self.assertEqual(response3.status_code, 200)
 
     def test_viewing_single_question(self):
@@ -60,12 +60,12 @@ class TestViewQuestion(BaseTestCase):
 
         response2 = self.app.post("/api/v1/questions",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(
                                       dict(title="What", question="What is your question?"), )
                                   )
         response3 = self.app.get("/api/v1/questions/1", content_type='application/json',
-                                 headers=dict(Authorization='Bearer ' + reply2[1]['token']), data={"qstn_id": "1"})
+                                 headers=dict(Authorization='Bearer ' + reply2['access_token']), data={"qstn_id": "1"})
         self.assertEqual(response3.status_code, 200)
 
     def test_deleting_a_questions(self):
@@ -83,15 +83,15 @@ class TestViewQuestion(BaseTestCase):
 
         response2 = self.app.post("/api/v1/questions",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(
                                       dict(title="What", question="What is your question?"), )
                                   )
         response4 = self.app.get("api/v1/questions", content_type='application/json',
-                                 headers=dict(Authorization='Bearer ' + reply2[1]['token']))
+                                 headers=dict(Authorization='Bearer ' + reply2['access_token']))
 
         response3 = self.app.delete("/api/v1/questions/1", content_type='application/json',
-                                    headers=dict(Authorization='Bearer ' + reply2[1]['token']))
+                                    headers=dict(Authorization='Bearer ' + reply2['access_token']))
 
         reply = json.loads(response3.data)
 
@@ -113,12 +113,12 @@ class TestViewQuestion(BaseTestCase):
 
         response2 = self.app.post("/api/v1/questions",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(
                                       dict(title="What", question="What is your question?"), )
                                   )
         response3 = self.app.delete("/api/v1/questions/r", content_type='application/json',
-                                    headers=dict(Authorization='Bearer ' + reply2[1]['token']))
+                                    headers=dict(Authorization='Bearer ' + reply2['access_token']))
 
         reply = json.loads(response3.data)
         self.assertEqual(reply.get("message"), "Id should be an interger")
@@ -138,12 +138,12 @@ class TestViewQuestion(BaseTestCase):
 
         response2 = self.app.post("/api/v1/questions",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(
                                       dict(title="What", question="What is your question?"), )
                                   )
         response3 = self.app.delete("/api/v1/questions/2", content_type='application/json',
-                                    headers=dict(Authorization='Bearer ' + reply2[1]['token']))
+                                    headers=dict(Authorization='Bearer ' + reply2['access_token']))
 
         reply = json.loads(response3.data)
         self.assertEqual(reply.get("message"), "Question does not exist")
@@ -162,7 +162,7 @@ class TestViewQuestion(BaseTestCase):
                                  )
         reply2 = json.loads(response.data.decode())
         response3 = self.app.get("/api/v1/questions/user_questions", content_type='application/json',
-                                 headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                 headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                  data={"qstn_owner": "angule"})
         reply = json.loads(response3.data.decode())
         self.assertEqual(reply.get("message"), "user has no questions")
@@ -184,10 +184,10 @@ class TestViewQuestion(BaseTestCase):
 
         response2 = self.app.post("/api/v1/questions",
                                   content_type='application/json',
-                                  headers=dict(Authorization='Bearer ' + reply2[1]['token']),
+                                  headers=dict(Authorization='Bearer ' + reply2['access_token']),
                                   data=json.dumps(
                                       dict(title="What", question="What is your question?"), )
                                   )
         response3 = self.app.get("/api/v1/questions/user_questions", content_type='application/json',
-                                 headers=dict(Authorization='Bearer ' + reply2[1]['token']), data={"qstn_id": "1"})
+                                 headers=dict(Authorization='Bearer ' + reply2['access_token']), data={"qstn_id": "1"})
         self.assertEqual(response3.status_code, 200)
