@@ -81,7 +81,7 @@ Api [documentation](https://stackoverflowliteapiv11.docs.apiary.io)
 
 * Change directory to the cloned folder using the following command for Windows, Linux and MacOS
 
-            `cd StackOverflow-lite`
+            `cd StackOverflow-lite_endpoints_challenge3.git`
 
 * If you do not have a virtual environment installed run the following command, else follow the next steps.
 
@@ -98,6 +98,10 @@ Api [documentation](https://stackoverflowliteapiv11.docs.apiary.io)
      and for Linux and MacOS
 
             `source venv/bin/activate`
+
+* Create `.env` with same variables as `.env.example` then run
+
+            `source .env`
 
 * Install the app dependencies.(for Windows, Linux and MacOS)
 

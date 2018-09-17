@@ -51,7 +51,7 @@ class FetchAllQuestions(MethodView):
         """method to view all questions"""
         all_questions = get_all_questions()
         if all_questions:
-            return jsonify({"questions": all_questions}), 200
+            return jsonify({"message": "All questions viewed successfully", "questions": all_questions}), 200
         return jsonify({"message": "No questions posted yet"}), 404
 
 
