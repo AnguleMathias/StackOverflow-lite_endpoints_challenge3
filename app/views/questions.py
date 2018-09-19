@@ -38,7 +38,7 @@ class PostQuestion(MethodView):
                     return jsonify({"message": "Question already exists, check it out for an answer"}), 409
                 post_new_question(title=title, question=question, qstn_owner=qstn_owner, date=date)
                 new_question = Question(title=title, question=question, qstn_owner=qstn_owner, date=date)
-                return jsonify({"New Question Posted": new_question.__dict__}), 201
+                return jsonify({"message": "Question posted successfully", "New Question Posted": new_question.__dict__}), 201
             return jsonify({"message": "a 'key(s)' is missing in your question body"}), 400
         except:
             return jsonify({"message": "All fields are required"}), 400
@@ -67,7 +67,7 @@ class FetchSingleQuestion(MethodView):
             question_details = get_single_question(qstn_id=qstn_id)
             all_answers = get_all_answers_to_question(qstn_id=qstn_id)
             if question_details:
-                return jsonify({"Question Details": question_details, "Answers": all_answers}), 200
+                return jsonify({"message": "success", "Question Details": question_details, "Answers": all_answers}), 200
             return jsonify({"message": "Question does not exist"}), 404
         except:
             return jsonify({"message": "Check your url and try again"}), 400

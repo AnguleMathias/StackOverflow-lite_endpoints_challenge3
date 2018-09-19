@@ -199,7 +199,7 @@ class TestPostAnswer(BaseTestCase):
                                  data=json.dumps(dict(answer="Do you have a question?"), )
                                  )
         reply4 = json.loads(response4.data)
-        self.assertEqual(reply4.get("message"), "No such question exists any more")
+        self.assertEqual(reply4.get("message"), "No such answer exists")
         self.assertEqual(response4.status_code, 404)
 
     def test_get_answer_as_answer_owner(self):

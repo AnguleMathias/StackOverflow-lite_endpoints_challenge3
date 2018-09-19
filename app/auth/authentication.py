@@ -41,7 +41,7 @@ class RegisterUser(MethodView):
             else:
                 add_new_user(user_name=user_name, email=email, password=password)
                 new_user = User(user_name, email, password)
-                return jsonify({"New User Created": new_user.__dict__}), 201
+                return jsonify({"message": "New User Created", "New User Created": new_user.__dict__}), 201
         return jsonify({"message": "a 'key(s)' is missing in your registration body"}), 400
 
 

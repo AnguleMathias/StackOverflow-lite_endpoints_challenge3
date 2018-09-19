@@ -52,7 +52,7 @@ class PostAnswerToQuestion(MethodView):
                                 vote=vote, status=status, date=date)
                 new_answer = Answer(answer=answer, ans_owner=ans_owner, qstn_id=qstn_id,
                                     vote=vote, status=status, date=date)
-                return jsonify({'New Answer Posted': new_answer.__dict__}), 201
+                return jsonify({"message": "success", 'New Answer Posted': new_answer.__dict__}), 201
             return jsonify({"message": "a 'key' is missing in your answer body"}), 400
         except Exception as exception:
             return jsonify({"message": exception}), 400
@@ -75,12 +75,12 @@ class UpDateAnswer(MethodView):
             user = get_user_by_username(user_name=loggedin_user["username"], password=loggedin_user["password"])
             current_user = user["username"]
 
-            does_answer_exist = get_answer_by_id(ans_id=ans_id, qstn_id=qstn_id)
-            does_qstn_exist = get_question_by_id(qstn_id=qstn_id)
+            answer = get_answer_by_id(ans_id=ans_id, qstn_id=qstn_id)
+            question = get_question_by_id(qstn_id=qstn_id)
             ans_owner = get_answer_details(qstn_id, ans_id)
             question_details = get_single_question(qstn_id=qstn_id)
-            if does_qstn_exist:
-                if does_answer_exist:
+            if question:
+                if answer:
                     if current_user == ans_owner["ans_owner"]:
                         data = request.get_json()
                         if "answer" in data.keys():
@@ -94,13 +94,18 @@ class UpDateAnswer(MethodView):
                             update = update_answer(answer=answer, ans_id=ans_id, qstn_id=qstn_id)
                             updated_answer = get_answer_details(qstn_id=qstn_id, ans_id=ans_id)
                             return jsonify({"message": update, "Updated answer": updated_answer}), 200
-                        return jsonify({"message": "Answer 'key' is missing"}), 400
+                        else:
+                            return jsonify({"message": "Answer 'key' is missing"}), 400
                     if current_user == question_details["qstn_owner"]:
                         status = "Accepted"
                         accept = accept_answer(status=status, qstn_id=qstn_id, ans_id=ans_id)
                         updated_answer = get_answer_details(qstn_id=qstn_id, ans_id=ans_id)
                         return jsonify({"message": accept, "Updated answer": updated_answer}), 200
+                    else:
+                        return jsonify({"message": "Action not allowed"}), 401
+                else:
                     return jsonify({"message": "No such answer exists"}), 404
+            else:
                 return jsonify({"message": "No such question exists any more"}), 404
         except Exception as exception:
             return jsonify({"message": exception}), 400
