@@ -102,7 +102,7 @@ class FetchAllUserQuestions(MethodView):
         qstn_owner = user["username"]
         user_questions = get_all_user_questions(user_name=qstn_owner)
         if user_questions:
-            return jsonify({"All Questions": user_questions}), 200
+            return jsonify({"questions": user_questions}), 200
         return jsonify({"message": "user has no questions"}), 404
 
 
