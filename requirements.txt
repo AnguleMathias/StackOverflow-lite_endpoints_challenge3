@@ -17,7 +17,7 @@ flasgger==0.9.0
 Flask==1.0.2
 Flask-Bcrypt==0.7.1
 Flask-JWT-Extended==3.12.1
-flask-cors==3.0.6
+flask-cors==3.0.9
 funcsigs==1.0.2
 gunicorn==19.9.0
 idna==2.7
